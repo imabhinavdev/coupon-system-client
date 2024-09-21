@@ -14,3 +14,5 @@ export const SiteLinks = {
     link: "/auth/signup",
   },
 };
+
+export const backendUrl = "http://localhost:8080/api/v1";

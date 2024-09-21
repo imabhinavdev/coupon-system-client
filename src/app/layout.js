@@ -5,6 +5,7 @@ import { DM_Sans } from "next/font/google";
 import Footer from "@/components/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from "@/context/UserContext";
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weights: [400, 500, 700],
@@ -19,17 +20,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
-      >
-        <NavigationBar />
-        <div className="flex-grow flex flex-col h-full md:px-0 px-4">
-          {children}
-        </div>
-        <Footer />
-        <ToastContainer />
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      </body>
+      <UserProvider>
+        <body
+          className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
+        >
+          <NavigationBar />
+          <div className="flex-grow flex flex-col h-full md:px-0 px-4">
+            {children}
+          </div>
+          <Footer />
+          <ToastContainer />
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        </body>
+      </UserProvider>
     </html>
   );
 }

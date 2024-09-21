@@ -1,12 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import SiteIcon from "../site-title";
+import { UserContext } from "@/context/UserContext";
 import { NavigationData, NavigationButtonData, SiteLinks } from "@/data";
+
 export default () => {
   const [state, setState] = useState(false);
 
   // Replace / paths with your paths
+
+  const user = useContext(UserContext);
+  console.log(user);
 
   useEffect(() => {
     document.onclick = (e) => {
