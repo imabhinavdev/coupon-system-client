@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Coupons = () => {
   const [couponCategory, setCouponCategory] = useState([]);
@@ -11,8 +12,11 @@ const Coupons = () => {
           "http://localhost:8080/api/v1/coupon-category/?isActive=true"
         );
         const data = await response.json();
-        console.log(data["coupon_category"]);
-        setCouponCategory(data["coupon_category"]);
+        if (response.ok) {
+          setCouponCategory(data["coupon_category"]);
+        } else {
+          toast.error(data.message);
+        }
       } catch (error) {
         console.error("Error fetching coupons:", error);
       }

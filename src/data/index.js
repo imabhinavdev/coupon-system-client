@@ -1,7 +1,7 @@
 export const NavigationData = [
   { title: "Coupons", path: "/user/coupons" },
   { title: "Contact Us", path: "/contact" },
-  { title: "Orders", path: "/user/orders" },
+  { title: "Your Orders", path: "/user/orders" },
 ];
 
 export const SiteLinks = {
