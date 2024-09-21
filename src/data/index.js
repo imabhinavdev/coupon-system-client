@@ -1,11 +1,11 @@
 export const NavigationData = [
-  { title: "Features", path: "/" },
-  { title: "Integrations", path: "/" },
-  { title: "Customers", path: "/" },
-  { title: "Yash", path: "/yash" },
+  { title: "Coupons", path: "/coupons" },
+  { title: "Contact Us", path: "/contact" },
+  { title: "Orders", path: "/user/orders" },
 ];
 
-export const NavigationButtonData = {
+
+export const SiteLinks = {
   login: {
     title: "Login",
     link: "/login",

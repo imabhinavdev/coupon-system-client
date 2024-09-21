@@ -1,16 +1,50 @@
 "use client";
 import { EyeCloseIcon, EyeOpenIcon, GoogleIcon } from "@/components/icons";
 import SiteIcon from "@/components/site-title";
-import { NavigationButtonData } from "@/data";
-import React, { useState } from "react";
+import { SiteLinks } from "@/data";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
-
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 export default () => {
   const [showEmail, setShowEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
-  const toggleEmailVisibility = () => {
-    setShowEmail(!showEmail);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
+
+      if (!email || !password) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+
+      const res = await fetch("http://localhost:8080/api/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        toast.success("Logged in successfully");
+        router.push("/coupons");
+      } else {
+        toast.error(data.error || "An error occurred. Please try again");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred. Please try again");
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -18,7 +52,7 @@ export default () => {
   };
 
   return (
-    <main className="w-full flex flex-col items-center justify-center bg-gray-50 rounded sm:px-4">
+    <main className="w-full flex flex-col items-center justify-center bg-gray-50 md:py-8 rounded sm:px-4">
       <div className="w-full space-y-6 sm:max-w-md">
         <div className="text-center">
           <SiteIcon />
@@ -29,7 +63,7 @@ export default () => {
             <p>
               Don't have an account?{" "}
               <Link
-                href={NavigationButtonData.signup.link}
+                href={SiteLinks.signup.link}
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Sign up
@@ -49,21 +83,16 @@ export default () => {
               Or continue with
             </p>
           </div>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Input */}
             <div className="relative">
               <label className="font-medium">Email</label>
               <input
                 type={showEmail ? "text" : "email"}
                 required
+                ref={emailRef}
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
               />
-              <span
-                onClick={toggleEmailVisibility}
-                className="absolute right-3 top-10 cursor-pointer"
-              >
-                {showEmail ? <EyeOpenIcon /> : <EyeCloseIcon />}
-              </span>
             </div>
             {/* Password Input */}
             <div className="relative">
@@ -71,6 +100,8 @@ export default () => {
               <input
                 type={showPassword ? "text" : "password"}
                 required
+                ref={passwordRef}
+                minLength={8}
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
               />
               <span
@@ -84,7 +115,10 @@ export default () => {
                 )}
               </span>
             </div>
-            <button className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
+            <button
+              type="password"
+              className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+            >
               Sign in
             </button>
           </form>

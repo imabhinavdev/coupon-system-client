@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import SiteIcon from "../site-title";
-import { NavigationData, NavigationButtonData } from "@/data";
+import { NavigationData, NavigationButtonData, SiteLinks } from "@/data";
 export default () => {
   const [state, setState] = useState(false);
 
@@ -81,16 +81,16 @@ export default () => {
           </ul>
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
             <Link
-              href={NavigationButtonData.login.link}
+              href={SiteLinks.login.link}
               className="block text-gray-700 hover:text-gray-900 text-md"
             >
-              Log in
+              {SiteLinks.login.title}
             </Link>
             <Link
-              href={NavigationButtonData.signup.link}
-              className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
+              href={SiteLinks.signup.link}
+              className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-secondary hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
             >
-              Sign in
+              {SiteLinks.signup.title}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"

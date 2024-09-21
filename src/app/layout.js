@@ -1,14 +1,15 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import NavigationBar from "@/components/navigation";
-import {DM_Sans} from 'next/font/google'
-
-
+import { DM_Sans } from "next/font/google";
+import Footer from "@/components/footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const dmsans = DM_Sans({
-  subsets: ['latin'],
+  subsets: ["latin"],
   weights: [400, 500, 700],
-  display: 'swap',
-})
+  display: "swap",
+});
 
 export const metadata = {
   title: "Coupon System",
@@ -19,10 +20,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${dmsans.className} antialiased max-w-screen-xl mx-auto`}
+        className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
       >
         <NavigationBar />
-        {children}
+        <div className="flex-grow flex flex-col h-full md:px-0 px-4">
+          {children}
+        </div>
+        <Footer />
+        <ToastContainer />
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </body>
     </html>
