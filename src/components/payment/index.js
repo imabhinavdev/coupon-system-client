@@ -2,7 +2,7 @@
 import GenerateQR from "@/components/qrcode-generate";
 import React, { useState } from "react";
 
-const Page = () => {
+const PaymentPage = () => {
   const [coupon, setCoupon] = useState(null);
 
   const handlePayment = async (e) => {
@@ -48,11 +48,9 @@ const Page = () => {
           email: "contact@imabhinav.dev",
           contact: "9000090000",
         },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
+        
         theme: {
-          color: "#3399cc",
+          color: "#000",
         },
       };
 
@@ -118,4 +116,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default PaymentPage;

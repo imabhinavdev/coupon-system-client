@@ -37,7 +37,7 @@ export default () => {
       console.log(data);
       if (res.ok) {
         toast.success("Logged in successfully");
-        router.push("/coupons");
+        window.location.reload();
       } else {
         toast.error(data.error || "An error occurred. Please try again");
       }

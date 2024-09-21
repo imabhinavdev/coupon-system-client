@@ -1,17 +1,16 @@
 export const NavigationData = [
-  { title: "Coupons", path: "/coupons" },
+  { title: "Coupons", path: "/user/coupons" },
   { title: "Contact Us", path: "/contact" },
   { title: "Orders", path: "/user/orders" },
 ];
 
-
 export const SiteLinks = {
   login: {
     title: "Login",
-    link: "/login",
+    link: "/auth/login",
   },
   signup: {
     title: "Signup",
-    link: "/signup",
+    link: "/auth/signup",
   },
 };

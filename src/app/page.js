@@ -1,9 +1,8 @@
 "use client";
+import PaymentPage from "@/components/payment";
 import React, { useEffect } from "react";
 
 const Page = () => {
-
-
   return (
     <div className="md:py-10 p-2 rounded-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white flex items-center justify-center">
       <div className="container mx-auto px-4 text-center">
@@ -41,6 +40,7 @@ const Page = () => {
           </div>
         </div>
       </div>
+      <PaymentPage />
     </div>
   );
 };
