@@ -1,4 +1,5 @@
 "use client";
+import PaymentComponent from "@/components/payment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -37,9 +38,7 @@ const Coupons = () => {
               <h3 className="md:text-2xl text-md">{coupon.name}</h3>
               <p>₹{coupon.price}</p>
             </div>
-            <button className="bg-primary text-secondary text-sm md:text-md rounded-lg px-4 py-2">
-              Pay Now
-            </button>
+            <PaymentComponent coupon_category={coupon} />
           </div>
         ))}
       </div>

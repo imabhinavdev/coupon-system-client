@@ -1,25 +1,26 @@
 "use client";
 import GenerateQR from "@/components/qrcode-generate";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "@/context/UserContext";
+import { backendUrl } from "@/data";
 
-const PaymentPage = () => {
+const PaymentComponent = ({ coupon_category }) => {
   const [coupon, setCoupon] = useState(null);
+  const { user } = useContext(UserContext);
 
   const handlePayment = async (e) => {
-    e.preventDefault(); // Prevent default form submit behavior
+    e.preventDefault(); 
 
     const formData = new FormData();
-    formData.append("id", "3");
-    formData.append("user_id", "1");
+    formData.append("coupon_category_id", coupon_category.id);
+    formData.append("user_id", user.id);
+    formData.append("coupon_category_price", coupon_category.price);
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/payment/order",
-        {
-          method: "POST",
-          body: formData, // Send the formData directly
-        }
-      );
+      const response = await fetch(`${backendUrl}/payment/order`, {
+        method: "POST",
+        body: formData, // Send the formData directly
+      });
 
       const data = await response.json();
       console.log(data);
@@ -28,14 +29,13 @@ const PaymentPage = () => {
 
       var options = {
         key: "rzp_test_FivlgkZZzZspfT", // Enter the Key ID generated from the Dashboard
-        amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount: `${coupon_category.price}00`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "Ikshana",
         description: "Test Transaction",
         image: "https://example.com/your_logo",
         order_id: orderID, // Order ID from your server response
         handler: function (response) {
-          // Log all values returned in the response
           verifySignature(
             response.razorpay_signature,
             transactionId,
@@ -44,11 +44,11 @@ const PaymentPage = () => {
           );
         },
         prefill: {
-          name: "Abhinav Singh",
-          email: "contact@imabhinav.dev",
-          contact: "9000090000",
+          name: user.name,
+          email: user.email,
+          contact: user.phone,
         },
-        
+
         theme: {
           color: "#000",
         },
@@ -84,13 +84,10 @@ const PaymentPage = () => {
     formData.append("razorpay_order_id", razorpay_order_id);
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/payment/verify",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${backendUrl}/payment/verify`, {
+        method: "POST",
+        body: formData,
+      });
 
       const data = await response.json();
       console.dir(data);
@@ -106,14 +103,13 @@ const PaymentPage = () => {
   };
 
   return (
-    <div>
-      <h1>Testing Payment</h1>
-      <button className="p-2 bg-slate-200 rounded" onClick={handlePayment}>
-        Pay
-      </button>
-      {coupon && <GenerateQR coupon={coupon} />}
-    </div>
+    <button
+      className="bg-primary text-secondary text-sm md:text-md rounded-lg px-4 py-2"
+      onClick={handlePayment}
+    >
+      Pay Now
+    </button>
   );
 };
 
-export default PaymentPage;
+export default PaymentComponent;
