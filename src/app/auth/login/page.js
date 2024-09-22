@@ -34,7 +34,6 @@ export default () => {
         body: formData,
       });
       const data = await res.json();
-      console.log(data);
       if (res.ok) {
         toast.success("Logged in successfully");
         window.location.reload();

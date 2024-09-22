@@ -1,18 +1,41 @@
-import React from "react";
+"use client";
+import { SiteLinks } from "@/data";
+import Link from "next/link";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "@/context/UserContext";
+import { backendUrl } from "@/data";
+import { toast } from "react-toastify";
+import CouponModal from "@/components/coupon-modal";
 
 const Orders = () => {
-  const orders = [
-    {
-      id: 1,
-      title: "Order 1",
-      price: 1000,
-    },
-    {
-      id: 2,
-      title: "Order 2",
-      price: 2000,
-    },
-  ]; // Assuming no orders exist for now. Replace with actual data if needed.
+  const [orders, setOrders] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState(null); // State for the selected coupon
+  const { user } = useContext(UserContext);
+
+  const handleModal = (coupon = null) => {
+    setSelectedCoupon(coupon); // Set selected coupon for the modal
+    setShowModal(!showModal);
+  };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          `${backendUrl}/coupon/?user_id=${user.id}`
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setOrders(data.coupons);
+        }
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        toast.error("Error fetching orders");
+      }
+    };
+
+    fetchOrders();
+  }, [user.id]); // Add user.id to dependencies
 
   return (
     <div className="flex-grow h-full flex items-start justify-center bg-secondary rounded-xl">
@@ -28,29 +51,48 @@ const Orders = () => {
                 className="bg-primary text-secondary p-6 rounded-xl shadow-lg flex justify-between items-center"
               >
                 <div>
-                  <h3 className="text-xl font-semibold">{order.title}</h3>
+                  <h3 className="text-xl font-semibold">
+                    {order.coupon_category.name}
+                  </h3>
                   <span className="text-sm text-gray-400">21-08-2024</span>
-
-                  <p className="mt-2">₹{order.price}</p>
+                  <p className="mt-2">₹{order.coupon_category.price}</p>
                 </div>
-                <button className="bg-secondary text-primary px-4 py-2 rounded-lg">
+                <button
+                  onClick={() =>
+                    handleModal({
+                      id: order.id,
+                      user_id: order.user_id,
+                      coupon_category: order.coupon_category,
+                    })
+                  }
+                  className="bg-secondary text-primary px-4 py-2 rounded-lg"
+                >
                   View Details
                 </button>
               </div>
             ))}
           </div>
+          {/* Render modal outside of the map */}
+          <CouponModal
+            isOpen={showModal}
+            onClose={handleModal}
+            coupon={selectedCoupon} // Pass the selected coupon
+          />
         </div>
       ) : (
-        <div className="text-center">
+        <div className="text-center flex flex-col p-4 gap-4">
           <h2 className="text-4xl font-bold text-primary mb-4">
             No Orders Yet
           </h2>
           <p className="text-xl text-primary">
             Looks like you haven't placed any orders yet. Start shopping now!
           </p>
-          <button className="mt-6 bg-primary text-secondary px-6 py-3 rounded-lg">
+          <Link
+            href={SiteLinks.coupons.link}
+            className="bg-primary text-secondary px-6 py-3 rounded-lg"
+          >
             Explore Coupons
-          </button>
+          </Link>
         </div>
       )}
     </div>

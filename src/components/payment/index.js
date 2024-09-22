@@ -1,15 +1,28 @@
 "use client";
-import GenerateQR from "@/components/qrcode-generate";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/context/UserContext";
 import { backendUrl } from "@/data";
+import CouponModal from "@/components/coupon-modal";
 
-const PaymentComponent = ({ coupon_category }) => {
+const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   const [coupon, setCoupon] = useState(null);
   const { user } = useContext(UserContext);
+  const [razorpayReady, setRazorpayReady] = useState(false); // State to check if Razorpay is loaded
+
+  useEffect(() => {
+    const loadRazorpay = () => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => setRazorpayReady(true);
+      script.onerror = () => console.error("Failed to load Razorpay script");
+      document.body.appendChild(script);
+    };
+
+    loadRazorpay();
+  }, []);
 
   const handlePayment = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const formData = new FormData();
     formData.append("coupon_category_id", coupon_category.id);
@@ -19,53 +32,50 @@ const PaymentComponent = ({ coupon_category }) => {
     try {
       const response = await fetch(`${backendUrl}/payment/order`, {
         method: "POST",
-        body: formData, // Send the formData directly
+        body: formData,
       });
 
       const data = await response.json();
-      console.log(data);
       const orderID = data.data.id;
       const transactionId = data.data.transaction_id;
 
-      var options = {
-        key: "rzp_test_FivlgkZZzZspfT", // Enter the Key ID generated from the Dashboard
-        amount: `${coupon_category.price}00`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: "INR",
-        name: "Ikshana",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: orderID, // Order ID from your server response
-        handler: function (response) {
-          verifySignature(
-            response.razorpay_signature,
-            transactionId,
-            response.razorpay_payment_id,
-            response.razorpay_order_id
-          );
-        },
-        prefill: {
-          name: user.name,
-          email: user.email,
-          contact: user.phone,
-        },
+      if (razorpayReady) {
+        var options = {
+          key: "rzp_test_FivlgkZZzZspfT", // Enter the Key ID generated from the Dashboard
+          amount: `${coupon_category.price}00`, // Amount is in currency subunits. Default currency is INR.
+          currency: "INR",
+          name: "Ikshana",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: orderID,
+          handler: function (response) {
+            verifySignature(
+              response.razorpay_signature,
+              transactionId,
+              response.razorpay_payment_id,
+              response.razorpay_order_id
+            );
+          },
+          prefill: {
+            name: user.name,
+            email: user.email,
+            contact: user.phone,
+          },
+          theme: {
+            color: "#000",
+          },
+        };
 
-        theme: {
-          color: "#000",
-        },
-      };
+        var rzp1 = new Razorpay(options);
+        rzp1.on("payment.failed", function (response) {
+          alert(`Payment failed! Error Code: ${response.error.code}`);
+          alert(`Description: ${response.error.description}`);
+        });
 
-      var rzp1 = new Razorpay(options);
-      rzp1.on("payment.failed", function (response) {
-        alert(`Payment failed! Error Code: ${response.error.code}`);
-        alert(`Description: ${response.error.description}`);
-        alert(`Source: ${response.error.source}`);
-        alert(`Step: ${response.error.step}`);
-        alert(`Reason: ${response.error.reason}`);
-        alert(`Order ID: ${response.error.metadata.order_id}`);
-        alert(`Payment ID: ${response.error.metadata.payment_id}`);
-      });
-
-      rzp1.open(); // Trigger the payment
+        rzp1.open(); // Trigger the payment
+      } else {
+        console.error("Razorpay is not ready");
+      }
     } catch (error) {
       console.error("Error during payment:", error);
     }
@@ -90,25 +100,38 @@ const PaymentComponent = ({ coupon_category }) => {
       });
 
       const data = await response.json();
-      console.dir(data);
-      const couponData = {};
-      couponData["coupon_category"] = data.data.coupon_category_name;
-      couponData["id"] = data.data.id;
-      couponData["user_id"] = data.data.user_id;
-      console.dir(couponData);
+      const couponData = {
+        coupon_category: data.data.coupon_category_name,
+        id: data.data.id,
+        user_id: data.data.user_id,
+      };
       setCoupon(couponData);
     } catch (error) {
-      console.error("Error during payment:", error);
+      console.error("Error during payment verification:", error);
     }
   };
 
+  const [modalOpen, setModalOpen] = useState(true);
+  const handleOnClose = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <button
-      className="bg-primary text-secondary text-sm md:text-md rounded-lg px-4 py-2"
-      onClick={handlePayment}
-    >
-      Pay Now
-    </button>
+    <>
+      <button
+        className="bg-primary text-secondary text-sm md:text-md rounded-lg px-4 py-2"
+        onClick={handlePayment}
+      >
+        {label}
+      </button>
+      {coupon && (
+        <CouponModal
+          coupon={coupon}
+          isOpen={modalOpen}
+          onClose={handleOnClose}
+        />
+      )}
+    </>
   );
 };
 
