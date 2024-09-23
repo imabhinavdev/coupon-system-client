@@ -123,9 +123,9 @@ export default () => {
           </form>
         </div>
         <div className="text-center">
-          <a href="javascript:void(0)" className="hover:text-indigo-600">
+          <Link href="/" className="hover:text-indigo-600">
             Forgot password?
-          </a>
+          </Link>
         </div>
       </div>
     </main>

@@ -20,18 +20,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <UserProvider>
-        <body
-          className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
-        >
+      <body
+        className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
+      >
+        <UserProvider>
           <NavigationBar />
           <div className="flex-grow flex flex-col h-full md:px-0 px-4">
             {children}
           </div>
           <Footer />
           <ToastContainer />
-        </body>
-      </UserProvider>
+        </UserProvider>
+      </body>
     </html>
   );
 }

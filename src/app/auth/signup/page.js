@@ -5,11 +5,11 @@ import { SiteLinks } from "@/data";
 import { toast } from "react-toastify";
 import React, { useState, useRef } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("student"); // state to track if user is Student or Faculty
-
+  const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const enrollmentRef = useRef(null);
@@ -54,6 +54,7 @@ const Signup = () => {
         const data = await res.json();
         if (res.ok) {
           toast.success("Account created successfully");
+          router.push(SiteLinks.coupons.link);
         } else {
           toast.error(data.error || "An error occurred. Please try again");
         }
