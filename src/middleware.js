@@ -7,6 +7,7 @@ export function middleware(request) {
 
   if (token) {
     decodedToken = jwt.decode(token);
+    decodedToken = decodedToken?.user;
     console.log("Decoded Token:", decodedToken);
   }
 
