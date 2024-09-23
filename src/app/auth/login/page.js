@@ -6,7 +6,8 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-export default () => {
+
+const LoginPage = () => {
   const [showEmail, setShowEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -60,7 +61,7 @@ export default () => {
               Log in to your account
             </h3>
             <p>
-              Don't have an account?{" "}
+              Don&apos;t have an account?
               <Link
                 href={SiteLinks.signup.link}
                 className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -131,3 +132,5 @@ export default () => {
     </main>
   );
 };
+
+export default LoginPage;

@@ -85,7 +85,7 @@ const Orders = () => {
             No Orders Yet
           </h2>
           <p className="text-xl text-primary">
-            Looks like you haven't placed any orders yet. Start shopping now!
+            Looks like you haven&apos;t placed any orders yet. Start shopping now!
           </p>
           <Link
             href={SiteLinks.coupons.link}

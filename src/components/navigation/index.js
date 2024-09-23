@@ -7,7 +7,7 @@ import { NavigationData, NavigationButtonData, SiteLinks } from "@/data";
 import { CrossIcon, MenuIcon, RightArrowIcon } from "@/components/icons";
 import Logout from "../logout";
 
-export default () => {
+const NavigationMenu = () => {
   const [state, setState] = useState(false);
 
   // Replace / paths with your paths
@@ -114,3 +114,5 @@ export default () => {
     </nav>
   );
 };
+
+export default NavigationMenu;

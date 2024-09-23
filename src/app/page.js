@@ -1,7 +1,7 @@
 "use client";
 import PaymentPage from "@/components/payment";
 import React, { useEffect } from "react";
-
+import Image from "next/image";
 const Page = () => {
   return (
     <div className="md:py-10 p-2 rounded-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white flex items-center justify-center">
@@ -14,7 +14,7 @@ const Page = () => {
         </p>
 
         <div className="flex justify-center mb-6">
-          <img
+          <Image
             className="w-2/3 md:w-1/3 rounded-lg shadow-lg"
             src="/mess-coupon.png"
             alt="Coupons"
@@ -36,7 +36,7 @@ const Page = () => {
           </div>
           <div className="bg-white text-red-600 p-6 rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold mb-2">Track Savings</h3>
-            <p>Monitor how much you've saved using our system.</p>
+            <p>Monitor how much you&apos;ve saved using our system.</p>
           </div>
         </div>
       </div>
