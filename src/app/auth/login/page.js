@@ -6,7 +6,7 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
+import { backendApi } from "@/data";
 const LoginPage = () => {
   const [showEmail, setShowEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,11 +29,16 @@ const LoginPage = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const res = await fetch("http://localhost:8080/api/v1/auth/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         credentials: "include",
         body: formData,
       });
+      // const res = await fetch(backendApi.login, {
+      //   method: "POST",
+      //   credentials: "include",
+      //   body: formData,
+      // });
       const data = await res.json();
       if (res.ok) {
         toast.success("Logged in successfully");

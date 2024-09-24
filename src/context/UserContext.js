@@ -11,7 +11,11 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${backendUrl}/auth/whoami`, {
+        // const response = await fetch(`${backendUrl}/auth/whoami`, {
+        //   method: "GET",
+        //   credentials: "include",
+        // });
+        const response = await fetch(`/api/auth/whoami`, {
           method: "GET",
           credentials: "include",
         });

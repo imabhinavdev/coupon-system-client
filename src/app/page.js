@@ -18,6 +18,8 @@ const Page = () => {
             className="w-2/3 md:w-1/3 rounded-lg shadow-lg"
             src="/mess-coupon.png"
             alt="Coupons"
+            width={250}
+            height={250}
           />
         </div>
 

@@ -7,10 +7,14 @@ const Logout = ({ className }) => {
   const { setUser } = useContext(UserContext);
   const logout = async () => {
     try {
-      const response = await fetch(`${backendUrl}/auth/logout`, {
+      const response = await fetch(`/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
+      // const response = await fetch(`${backendUrl}/auth/logout`, {
+      //   method: "POST",
+      //   credentials: "include",
+      // });
       const data = await response.json();
       if (response.ok) {
         setUser(null);

@@ -19,12 +19,13 @@ export const SiteLinks = {
   },
 };
 
-export const backendUrl = "http://localhost:8080/api/v1";
+export const backendUrl = "http://4.188.68.185:8080/api/v1";
 
 export const backendApi = {
   login: `${backendUrl}/auth/login`,
   signup: `${backendUrl}/auth/signup`,
   coupons: `${backendUrl}/coupon`,
+  active_coupon_category: `${backendUrl}/coupon-category/?isActive=true`,
   orders: `${backendUrl}/orders`,
   contact: `${backendUrl}/contact`,
   verify_coupon: `${backendUrl}/coupon/verify`,

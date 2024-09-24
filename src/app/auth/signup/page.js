@@ -1,7 +1,7 @@
 "use client";
 import { EyeCloseIcon, EyeOpenIcon, GoogleIcon } from "@/components/icons";
 import SiteIcon from "@/components/site-title";
-import { SiteLinks } from "@/data";
+import { backendApi, SiteLinks } from "@/data";
 import { toast } from "react-toastify";
 import React, { useState, useRef } from "react";
 import Link from "next/link";
@@ -45,12 +45,18 @@ const Signup = () => {
 
     const saveUser = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/auth/signup", {
+        const res = await fetch("/api/auth/signup", {
           method: "POST",
           credentials: "include",
 
           body: formData, // No need to set 'Content-Type'
         });
+        // const res = await fetch(backendApi.signup, {
+        //   method: "POST",
+        //   credentials: "include",
+
+        //   body: formData, // No need to set 'Content-Type'
+        // });
         const data = await res.json();
         if (res.ok) {
           toast.success("Account created successfully");

@@ -1,5 +1,6 @@
 "use client";
 import PaymentComponent from "@/components/payment";
+import { backendApi } from "@/data";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -9,9 +10,7 @@ const Coupons = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/v1/coupon-category/?isActive=true"
-        );
+        const response = await fetch(backendApi.active_coupon_category);
         const data = await response.json();
         if (response.ok) {
           setCouponCategory(data["coupon_category"]);
