@@ -6,9 +6,11 @@ import { UserContext } from "@/context/UserContext";
 import { backendUrl } from "@/data";
 import { toast } from "react-toastify";
 import CouponModal from "@/components/coupon-modal";
+import { formatDate } from "@/utils/FormatDate";
+import { formatTime } from "@/utils/FormatTime";
 
 const Orders = () => {
-  const [orders, setOrders] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState(null); // State for the selected coupon
   const { user } = useContext(UserContext);
@@ -22,7 +24,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backendApi.coupons}/?user_id=${user.id}&is_used=false`,
+          `${backendApi.history}/?user_id=${user.id}`,
           {
             method: "GET",
             credentials: "include",
@@ -30,11 +32,12 @@ const Orders = () => {
         );
         const data = await response.json();
         if (response.ok) {
-          setOrders(data.coupons);
+          setTransactions(data.transactions);
+          console.log(data.transactions);
         }
       } catch (error) {
-        console.error("Error fetching orders:", error);
-        toast.error("Error fetching orders");
+        console.error("Error fetching transactions:", error);
+        toast.error("Error fetching transactions");
       }
     };
 
@@ -43,25 +46,28 @@ const Orders = () => {
 
   return (
     <div className="flex-grow h-full flex items-start justify-center bg-secondary rounded-xl">
-      {orders.length > 0 ? (
+      {transactions.length > 0 ? (
         <div className="w-full mx-auto p-4">
           <h2 className="text-3xl font-bold text-primary mb-6 text-center">
-            Your Orders
+            Your Transactions
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            {orders.map((order) => (
+            {transactions.map((transaction) => (
               <div
-                key={order.id}
+                key={transaction.id}
                 className="bg-primary text-secondary px-6 py-2 rounded-xl shadow-lg flex justify-between items-center"
               >
                 <div>
                   <h3 className="md:text-xl text-md font-semibold">
-                    {order.coupon_category.name}
+                    {transaction.coupon_category.name}
                   </h3>
-                  <span className="text-sm text-gray-400">21-08-2024</span>
-                  <p className="mt-2">₹{order.coupon_category.price}</p>
+                  <span className="text-sm text-gray-400">
+                    {formatDate(transaction.created_at)} <br />
+                    {formatTime(transaction.created_at)}
+                  </span>
+                  <p className="mt-2">₹{transaction.coupon_category.price}</p>
                 </div>
-                <button
+                {/* <button
                   onClick={() =>
                     handleModal({
                       id: order.id,
@@ -72,7 +78,15 @@ const Orders = () => {
                   className="bg-secondary text-primary md:px-4 md:py-2 p-2 text-sm md:text-md  rounded-lg"
                 >
                   View Details
-                </button>
+                </button> */}
+                <span
+                  className={`${
+                    transaction.is_captured ? "bg-green-500" : "bg-red-500"
+                  } p-2 rounded-full text-primary
+                    `}
+                >
+                  {transaction.is_captured ? "Success" : "Failed"}
+                </span>
               </div>
             ))}
           </div>
@@ -89,8 +103,8 @@ const Orders = () => {
             No Orders Yet
           </h2>
           <p className="text-xl text-primary">
-            Looks like you haven&apos;t placed any orders yet. Start shopping
-            now!
+            Looks like you haven&apos;t placed any transactions yet. Start
+            shopping now!
           </p>
           <Link
             href={SiteLinks.coupons.link}

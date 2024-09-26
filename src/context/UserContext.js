@@ -1,6 +1,6 @@
 "use client";
 import { useState, createContext, useEffect } from "react";
-import { backendUrl } from "@/data";
+import { backendApi, backendUrl } from "@/data";
 
 export const UserContext = createContext();
 
@@ -11,14 +11,14 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // const response = await fetch(`${backendUrl}/auth/whoami`, {
-        //   method: "GET",
-        //   credentials: "include",
-        // });
-        const response = await fetch(`/api/auth/whoami`, {
+        const response = await fetch(backendApi.who_am_i, {
           method: "GET",
           credentials: "include",
         });
+        // const response = await fetch(`/api/auth/whoami`, {
+        //   method: "GET",
+        //   credentials: "include",
+        // });
         const data = await response.json();
         if (response.ok) {
           setUser(data.user.user);

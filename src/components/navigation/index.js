@@ -3,16 +3,39 @@ import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import SiteIcon from "@/components/site-title";
 import { UserContext } from "@/context/UserContext";
-import { NavigationData, NavigationButtonData, SiteLinks } from "@/data";
-import { CrossIcon, MenuIcon, RightArrowIcon } from "@/components/icons";
+import { SiteLinks } from "@/data";
+import { RightArrowIcon } from "@/components/icons";
 import Logout from "../logout";
 
 const NavigationMenu = () => {
   const [state, setState] = useState(false);
-
-  // Replace / paths with your paths
-
   const { user } = useContext(UserContext);
+
+  // Define navigation data based on user role
+  const getNavigationData = () => {
+    if (user?.is_admin) {
+      return [
+        { title: "Dashboard", path: "/admin/dashboard" },
+        { title: "Manage Users", path: "/admin/users" },
+        { title: "Coupon Category", path: "/admin/coupon-category" },
+      ];
+    } else if (user?.is_staff) {
+      return [
+        { title: "Coupons", path: "/staff/coupons" },
+        { title: "Orders", path: "/staff/orders" },
+        { title: "History", path: "/staff/history" },
+      ];
+    } else {
+      return [
+        { title: "Coupons", path: "/user/coupons" },
+        { title: "Your Orders", path: "/user/orders" },
+        { title: "History", path: "/user/history" },
+        { title: "Contact Us", path: "/contact" },
+      ];
+    }
+  };
+
+  const navigationData = getNavigationData();
 
   useEffect(() => {
     document.onclick = (e) => {
@@ -23,13 +46,13 @@ const NavigationMenu = () => {
 
   return (
     <nav
-      className={`bg-white pb-5 md:text-sm  ${
+      className={`bg-white pb-5 md:text-sm ${
         state
-          ? "shadow-lg rounded-xl border  mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0"
+          ? "shadow-lg rounded-xl border mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0"
           : ""
       }`}
     >
-      <div className="gap-x-14 items-center  mx-auto px-4 md:flex md:px-0">
+      <div className="gap-x-14 items-center mx-auto px-4 md:flex md:px-0">
         <div className="flex items-center justify-between py-5 md:block">
           <SiteIcon />
           <div className="md:hidden">
@@ -75,15 +98,13 @@ const NavigationMenu = () => {
           } `}
         >
           <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-            {NavigationData.map((item, idx) => {
-              return (
-                <li key={idx} className="text-gray-700 hover:text-gray-900">
-                  <Link href={item.path} className="block text-md">
-                    {item.title}
-                  </Link>
-                </li>
-              );
-            })}
+            {navigationData.map((item, idx) => (
+              <li key={idx} className="text-gray-700 hover:text-gray-900">
+                <Link href={item.path} className="block text-md">
+                  {item.title}
+                </Link>
+              </li>
+            ))}
           </ul>
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
             {!user ? (
