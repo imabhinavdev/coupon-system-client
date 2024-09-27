@@ -22,7 +22,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backendApi.coupons}/?user_id=${user.id}&is_used=false`,
+          `${backendApi.coupons}?user_id=${user.id}&is_used=false`,
           {
             method: "GET",
             credentials: "include",

@@ -12,7 +12,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(backendApi.all_users, {
+        const response = await fetch(backendApi.other_users, {
           method: "GET",
           credentials: "include",
         });
@@ -50,15 +50,15 @@ const AdminUsersPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">All Details</h1>
+    <div className="container ">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold mb-4 md:mb-0">All Details</h1>
         <input
           type="text"
-          placeholder="Search by name, email or phone"
+          placeholder="Search by name, email, or phone"
           value={searchQuery}
           onChange={handleSearch}
-          className="border border-gray-300 rounded-md p-2 w-64"
+          className="border border-gray-300 rounded-md p-2 w-full md:w-64"
         />
       </div>
 

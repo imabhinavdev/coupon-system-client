@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "chart.js": "^4.4.4",
     "flowbite-react": "^0.10.1",
     "html5-qrcode": "^2.3.8",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.13",
     "qrcode": "^1.5.4",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-toastify": "^10.0.5"
   },

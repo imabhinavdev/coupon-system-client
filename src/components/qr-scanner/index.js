@@ -51,7 +51,7 @@ const QRScannerModal = () => {
   const verifyCoupon = async (coupon) => {
     try {
       const response = await fetch(
-        `${backendApi.verify_coupon}/${coupon.coupon_id}`,
+        `${backendApi.verify_coupon}${coupon.coupon_id}`,
         {
           method: "POST",
           credentials: "include",

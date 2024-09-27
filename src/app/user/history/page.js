@@ -24,7 +24,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backendApi.history}/?user_id=${user.id}`,
+          `${backendApi.history}?user_id=${user.id}`,
           {
             method: "GET",
             credentials: "include",

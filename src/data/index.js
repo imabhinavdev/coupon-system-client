@@ -32,6 +32,7 @@ export const backendUrl = "http://localhost:8080/api/v1";
 export const backendApi = {
   login: `${backendUrl}/auth/login/`,
   signup: `${backendUrl}/auth/signup/`,
+  logout: `${backendUrl}/auth/logout/`,
   coupons: `${backendUrl}/coupon/`,
   active_coupon_category: `${backendUrl}/coupon-category/?isActive=true/`,
   orders: `${backendUrl}/orders/`,
@@ -39,7 +40,8 @@ export const backendApi = {
   verify_coupon: `${backendUrl}/coupon/verify/`,
   who_am_i: `${backendUrl}/auth/whoami/`,
   history: `${backendUrl}/transactions/`,
-  all_users: `${backendUrl}/users/`,
+  other_users: `${backendUrl}/users/?other_users=true/`,
   staff_users: `${backendUrl}/users/?is_staff=true/`,
   admin_users: `${backendUrl}/users/?is_admin=true/`,
+  coupon_category: `${backendUrl}/coupon-category/`,
 };

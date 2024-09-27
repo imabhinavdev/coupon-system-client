@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { backendUrl } from "@/data";
+import { backendApi, backendUrl } from "@/data";
 import { UserContext } from "@/context/UserContext";
 import { LogoutIcon } from "@/components/icons";
 
@@ -11,7 +11,7 @@ const Logout = ({ className }) => {
       //   method: "POST",
       //   credentials: "include",
       // });
-      const response = await fetch(`${backendUrl}/auth/logout`, {
+      const response = await fetch(backendApi.logout, {
         method: "POST",
         credentials: "include",
       });
