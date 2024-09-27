@@ -2,6 +2,8 @@
 import PaymentPage from "@/components/payment";
 import React, { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { SiteLinks } from "@/data";
 const Page = () => {
   return (
     <div className="md:py-10 p-2 rounded-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white flex items-center justify-center">
@@ -23,9 +25,12 @@ const Page = () => {
           />
         </div>
 
-        <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out">
+        <Link
+          href={SiteLinks.login.link}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out"
+        >
           Get Started
-        </button>
+        </Link>
 
         <div className="mt-8 flex flex-col md:gap-4 md:flex-row justify-around">
           <div className="bg-white text-purple-600 p-6 rounded-lg shadow-lg mb-4 md:mb-0">

@@ -44,4 +44,8 @@ export const backendApi = {
   staff_users: `${backendUrl}/users/?is_staff=true/`,
   admin_users: `${backendUrl}/users/?is_admin=true/`,
   coupon_category: `${backendUrl}/coupon-category/`,
+  revenue_by_category: `${backendUrl}/transactions/revenue/by-category/`,
+  revenue_over_time: `${backendUrl}/transactions/revenue/stats/`,
+  revenue_by_weekday: `${backendUrl}/coupon/used-by-weekdays/`,
+  total_revenue: `${backendUrl}/transactions/revenue/`,
 };

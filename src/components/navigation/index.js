@@ -46,7 +46,7 @@ const NavigationMenu = () => {
 
   return (
     <nav
-      className={`bg-white pb-5 md:text-sm ${
+      className={`bg-white pb-2 md:text-sm ${
         state
           ? "shadow-lg rounded-xl border mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0"
           : ""
