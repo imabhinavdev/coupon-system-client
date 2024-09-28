@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/context/UserContext";
 import { backendUrl } from "@/data";
 import CouponModal from "@/components/coupon-modal";
+import { toast } from "react-toastify";
 
 const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   const [coupon, setCoupon] = useState(null);
@@ -68,8 +69,7 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
 
         var rzp1 = new Razorpay(options);
         rzp1.on("payment.failed", function (response) {
-          alert(`Payment failed! Error Code: ${response.error.code}`);
-          alert(`Description: ${response.error.description}`);
+          toast.error("Payment failed");
         });
 
         rzp1.open(); // Trigger the payment

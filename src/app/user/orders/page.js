@@ -6,6 +6,8 @@ import { UserContext } from "@/context/UserContext";
 import { backendUrl } from "@/data";
 import { toast } from "react-toastify";
 import CouponModal from "@/components/coupon-modal";
+import { formatDate } from "@/utils/FormatDate";
+import { formatTime } from "@/utils/FormatTime";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -30,7 +32,11 @@ const Orders = () => {
         );
         const data = await response.json();
         if (response.ok) {
-          setOrders(data.coupons);
+          const sortedOrders = data.coupons.sort(
+            (a, b) => new Date(b.created_at) - new Date(a.created_at) // Sort in descending order
+          );
+          setOrders(sortedOrders);
+          console.log(sortedOrders);
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -39,7 +45,7 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, [user.id]); // Add user.id to dependencies
+  }, [user.id]);
 
   return (
     <div className="flex-grow h-full flex items-start justify-center bg-secondary rounded-xl">
@@ -58,7 +64,10 @@ const Orders = () => {
                   <h3 className="md:text-xl text-md font-semibold">
                     {order.coupon_category.name}
                   </h3>
-                  <span className="text-sm text-gray-400">21-08-2024</span>
+                  <span className="text-sm text-gray-400">
+                    {formatDate(order.created_at)} at{" "}
+                    {formatTime(order.created_at)}
+                  </span>
                   <p className="mt-2">₹{order.coupon_category.price}</p>
                 </div>
                 <button
@@ -71,7 +80,7 @@ const Orders = () => {
                   }
                   className="bg-secondary text-primary md:px-4 md:py-2 p-2 text-sm md:text-md  rounded-lg"
                 >
-                  View Details
+                  View QR
                 </button>
               </div>
             ))}

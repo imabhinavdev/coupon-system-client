@@ -117,7 +117,7 @@ const NavigationMenu = () => {
                 </Link>
                 <Link
                   href={SiteLinks.signup.link}
-                  className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-secondary hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
+                  className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-secondary hover:bg-gray-700 active:bg-gray-900 rounded-lg md:inline-flex"
                 >
                   {SiteLinks.signup.title}
                   <RightArrowIcon />
@@ -126,7 +126,7 @@ const NavigationMenu = () => {
             ) : (
               <>
                 <h1>Hello, {user.name}</h1>
-                <Logout className="bg-secondary text-primary rounded-full p-2 px-4" />
+                <Logout className="bg-secondary text-primary rounded-lg p-2 px-4" />
               </>
             )}
           </div>

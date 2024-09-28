@@ -27,11 +27,11 @@ const Logout = ({ className }) => {
 
   return (
     <p
-      className={`flex justify-center cursor-pointer ${className}`}
+      className={`flex justify-between gap-2  cursor-pointer ${className}`}
       onClick={logout}
     >
-      Logout
-      <LogoutIcon className="text-primary" />
+      <span>Logout</span>
+      <LogoutIcon className="text-primary " />
     </p>
   );
 };

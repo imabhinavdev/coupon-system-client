@@ -45,22 +45,22 @@ const Signup = () => {
 
     const saveUser = async () => {
       try {
-        const res = await fetch("/api/auth/signup", {
-          method: "POST",
-          credentials: "include",
-
-          body: formData, // No need to set 'Content-Type'
-        });
-        // const res = await fetch(backendApi.signup, {
+        // const res = await fetch("/api/auth/signup", {
         //   method: "POST",
         //   credentials: "include",
 
         //   body: formData, // No need to set 'Content-Type'
         // });
+        const res = await fetch(backendApi.signup, {
+          method: "POST",
+          credentials: "include",
+
+          body: formData, // No need to set 'Content-Type'
+        });
         const data = await res.json();
         if (res.ok) {
           toast.success("Account created successfully");
-          router.push(SiteLinks.coupons.link);
+          window.location.reload();
         } else {
           toast.error(data.error || "An error occurred. Please try again");
         }

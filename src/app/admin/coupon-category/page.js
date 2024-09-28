@@ -1,8 +1,8 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AddCouponCategoryModal from "@/components/add-coupon-category-modal";
+import EditCouponCategoryModal from "@/components/edit-coupon-category-modal";
 import DropdownMenu from "@/components/context-drop-menu";
 import { backendApi } from "@/data";
 
@@ -10,6 +10,8 @@ const AdminCouponCategoryDashboard = () => {
   const [couponCategory, setCouponCategory] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const fetchCouponCategory = async () => {
@@ -27,21 +29,67 @@ const AdminCouponCategoryDashboard = () => {
       }
     };
     fetchCouponCategory();
-  }, []);
+  }, [isEditModalOpen]);
 
   const filteredCategories = couponCategory.filter((category) =>
     category.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = (id) => {
-    toast.error("Coupon category deleted successfully.");
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`${backendApi.coupon_category}/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setCouponCategory((prev) =>
+          prev.filter((category) => category.id !== id)
+        ); // Remove deleted category from state
+        toast.success("Coupon category deleted successfully.");
+      } else {
+        throw new Error("Failed to delete coupon category.");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete coupon category.");
+    }
   };
 
-  const handleEdit = (id) => {
-    toast.info("Edit coupon category functionality.");
+  const handleEdit = async (category) => {
+    setSelectedCategory(category); // Set the selected category for editing
+    setIsEditModalOpen(true); // Open the edit modal
   };
 
-  const handleToggleActive = (id) => {
+  const updateCategory = async (updatedCategory) => {
+    try {
+      const response = await fetch(
+        `${backendApi.edit_coupon_category}/${updatedCategory.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedCategory),
+        }
+      );
+      if (response.ok) {
+        const updatedCategories = couponCategory.map((cat) =>
+          cat.id === updatedCategory.id ? updatedCategory : cat
+        );
+        setCouponCategory(updatedCategories); // Update state with the edited category
+        toast.success("Coupon category updated successfully.");
+      } else {
+        throw new Error("Failed to update coupon category.");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update coupon category.");
+    } finally {
+      setIsEditModalOpen(false); // Close the modal after editing
+    }
+  };
+
+  const handleToggleActive = async (id) => {
+    // Functionality to toggle active status (implement as needed)
     toast.success("Coupon category activeness changed.");
   };
 
@@ -84,13 +132,13 @@ const AdminCouponCategoryDashboard = () => {
               </h2>
               <DropdownMenu
                 onDelete={() => handleDelete(category.id)}
-                onEdit={() => handleEdit(category.id)}
+                onEdit={() => handleEdit(category)} // Pass category for editing
                 onToggleActive={() => handleToggleActive(category.id)}
               />
             </div>
 
             <p className="text-gray-600">
-              <span className="font-semibold">Price:</span> {category.price} INR
+              <span className="font-semibold">Price:</span> ₹ {category.price}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Created At:</span>{" "}
@@ -112,6 +160,14 @@ const AdminCouponCategoryDashboard = () => {
 
       {isModalOpen && (
         <AddCouponCategoryModal onClose={() => setIsModalOpen(false)} />
+      )}
+
+      {isEditModalOpen && selectedCategory && (
+        <EditCouponCategoryModal
+          onClose={() => setIsEditModalOpen(false)}
+          category={selectedCategory} // Pass selected category to the modal
+          onUpdate={updateCategory} // Pass update function to modal
+        />
       )}
     </div>
   );

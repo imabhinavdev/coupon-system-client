@@ -34,7 +34,11 @@ export const UserProvider = ({ children }) => {
 
   // Return a loading indicator while fetching user data
   if (loading) {
-    return <div>Loading...</div>; // You can customize this loading component
+    return (
+      <div className="flex w-full h-full justify-center items-center">
+        Loading...
+      </div>
+    ); // You can customize this loading component
   }
 
   return (

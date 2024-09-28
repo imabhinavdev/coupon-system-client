@@ -135,7 +135,7 @@ export const LogoutIcon = ({ className }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={`w-5 h-5 ${className}`}
   >
-    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_bgCarrier" strokeWidth={2} />
     <g
       id="SVGRepo_tracerCarrier"
       strokeLinecap="round"
@@ -145,15 +145,15 @@ export const LogoutIcon = ({ className }) => (
       {" "}
       <path
         d="M10 12H20M20 12L17 9M20 12L17 15"
-        stroke="#000000"
-        strokeWidth="1.5"
+        stroke="#fff"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />{" "}
       <path
         d="M4 12C4 7.58172 7.58172 4 12 4M12 20C9.47362 20 7.22075 18.8289 5.75463 17"
-        stroke="#000000"
-        strokeWidth="1.5"
+        stroke="#fff"
+        strokeWidth="2"
         strokeLinecap="round"
       />{" "}
     </g>

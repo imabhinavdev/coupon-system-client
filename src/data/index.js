@@ -28,13 +28,15 @@ export const SiteLinks = {
 
 // export const backendUrl = "http://4.188.68.185:8080/api/v1";
 export const backendUrl = "http://localhost:8080/api/v1";
+// export const backendUrl = "http://192.168.0.6:8080/api/v1";
 
 export const backendApi = {
   login: `${backendUrl}/auth/login/`,
   signup: `${backendUrl}/auth/signup/`,
   logout: `${backendUrl}/auth/logout/`,
   coupons: `${backendUrl}/coupon/`,
-  active_coupon_category: `${backendUrl}/coupon-category/?isActive=true/`,
+  active_coupon_category: `${backendUrl}/coupon-category/?isActive=true`,
+  edit_coupon_category: `${backendUrl}/coupon-category/`,
   orders: `${backendUrl}/orders/`,
   contact: `${backendUrl}/contact/`,
   verify_coupon: `${backendUrl}/coupon/verify/`,
