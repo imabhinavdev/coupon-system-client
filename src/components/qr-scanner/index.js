@@ -5,7 +5,7 @@ import { CrossIcon, LoadingIcon } from "@/components/icons"; // Importing the Cr
 import { backendApi } from "@/data";
 import { toast } from "react-toastify";
 const QRScannerModal = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const html5QrcodeScannerRef = useRef(null);
 
