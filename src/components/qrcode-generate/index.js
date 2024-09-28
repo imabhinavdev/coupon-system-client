@@ -8,9 +8,9 @@ const GenerateQR = ({ coupon }) => {
     const generateQRCode = async () => {
       try {
         const qrData = JSON.stringify({
-          coupon_id: coupon.id,
-          user_id: coupon.user_id,
-          coupon_category: coupon.coupon_category,
+          couponId: coupon.id,
+          userId: coupon.userId,
+          couponCategoryId: coupon.couponCategoryId,
         });
 
         const canvas = canvasRef.current;

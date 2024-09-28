@@ -1,43 +1,51 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DeleteIcon, EditIcon, ThreeDotsIcon } from "../icons";
+import ConfirmationModal from "@/components/confirmation-modal";
 
-const DropdownMenu = ({ onDelete, onEdit, onToggleActive }) => {
+const DropdownMenu = ({ onDelete, onEdit, onToggleActive, category }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null); // To reference the dropdown menu
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const handleClickOutside = (event) => {
-    // If the click happens outside the menuRef, close the dropdown
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    // Add event listener for clicks
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Cleanup the event listener on component unmount
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const handleDelete = () => {
-    onDelete();
-    setIsOpen(false); // Close menu after the action
+    setShowConfirmation(true);
+    setIsOpen(false);
   };
 
   const handleEdit = () => {
     onEdit();
-    setIsOpen(false); // Close menu after the action
+    setIsOpen(false);
   };
 
   const handleToggleActive = () => {
     onToggleActive();
     setIsOpen(false); // Close menu after the action
+  };
+
+  const confirmDelete = () => {
+    onDelete();
+    setShowConfirmation(false); // Close the modal after confirming delete
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmation(false); // Close the modal without deleting
   };
 
   return (
@@ -62,7 +70,7 @@ const DropdownMenu = ({ onDelete, onEdit, onToggleActive }) => {
               <span className="self-end">Edit</span>
             </button>
             <button
-              onClick={handleEdit}
+              onClick={handleDelete}
               className="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-gray-100 w-full text-left"
             >
               <span>
@@ -72,6 +80,14 @@ const DropdownMenu = ({ onDelete, onEdit, onToggleActive }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {showConfirmation && (
+        <ConfirmationModal
+          label={`Are you sure you want to delete ${category} item?`}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
       )}
     </div>
   );

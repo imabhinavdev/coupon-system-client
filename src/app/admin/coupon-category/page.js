@@ -5,6 +5,7 @@ import AddCouponCategoryModal from "@/components/add-coupon-category-modal";
 import EditCouponCategoryModal from "@/components/edit-coupon-category-modal";
 import DropdownMenu from "@/components/context-drop-menu";
 import { backendApi } from "@/data";
+import { formatDate } from "@/utils/FormatDate";
 
 const AdminCouponCategoryDashboard = () => {
   const [couponCategory, setCouponCategory] = useState([]);
@@ -44,7 +45,7 @@ const AdminCouponCategoryDashboard = () => {
         setCouponCategory((prev) =>
           prev.filter((category) => category.id !== id)
         ); // Remove deleted category from state
-        toast.success("Coupon category deleted successfully.");
+        toast.error("Coupon category deleted successfully.");
       } else {
         throw new Error("Failed to delete coupon category.");
       }
@@ -94,7 +95,7 @@ const AdminCouponCategoryDashboard = () => {
   };
 
   return (
-    <div className="container">
+    <div className="">
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-left mb-4 md:mb-0">
           Coupon Category Dashboard
@@ -131,7 +132,8 @@ const AdminCouponCategoryDashboard = () => {
                 {category.name}
               </h2>
               <DropdownMenu
-                onDelete={() => handleDelete(category.id)}
+                onDelete={() => handleDelete(category._id)}
+                category={category.name}
                 onEdit={() => handleEdit(category)} // Pass category for editing
                 onToggleActive={() => handleToggleActive(category.id)}
               />
@@ -142,21 +144,26 @@ const AdminCouponCategoryDashboard = () => {
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Created At:</span>{" "}
-              {new Date(category.created_at).toLocaleString()}
+              {formatDate(category.createdAt)}
             </p>
             <p className="text-gray-600">
               <span className={`font-semibold`}>Status:</span>{" "}
               <span
                 className={`${
-                  category.is_active ? "text-green-600" : "text-red-600"
+                  category.isActive ? "text-green-600" : "text-red-600"
                 } font-semibold`}
               >
-                {category.is_active ? "Active" : "Inactive"}
+                {category.isActive ? "Active" : "Inactive"}
               </span>
             </p>
           </div>
         ))}
       </div>
+      {filteredCategories.length === 0 && (
+        <div className="text-center text-gray-600 w-full h-full">
+          No coupon categories found.
+        </div>
+      )}
 
       {isModalOpen && (
         <AddCouponCategoryModal onClose={() => setIsModalOpen(false)} />
@@ -165,8 +172,8 @@ const AdminCouponCategoryDashboard = () => {
       {isEditModalOpen && selectedCategory && (
         <EditCouponCategoryModal
           onClose={() => setIsEditModalOpen(false)}
-          category={selectedCategory} // Pass selected category to the modal
-          onUpdate={updateCategory} // Pass update function to modal
+          category={selectedCategory}
+          onUpdate={updateCategory}
         />
       )}
     </div>

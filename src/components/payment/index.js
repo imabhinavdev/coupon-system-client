@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   const [coupon, setCoupon] = useState(null);
   const { user } = useContext(UserContext);
+
   const [razorpayReady, setRazorpayReady] = useState(false); // State to check if Razorpay is loaded
 
   useEffect(() => {
@@ -27,13 +28,21 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
 
     const formData = new FormData();
     formData.append("coupon_category_id", coupon_category.id);
-    formData.append("user_id", user.id);
+    formData.append("user_id", user._id);
     formData.append("coupon_category_price", coupon_category.price);
+    const dataToSend = {
+      coupon_category_id: coupon_category._id,
+      user_id: user._id,
+      coupon_category_price: coupon_category.price,
+    };
 
     try {
       const response = await fetch(`${backendUrl}/payment/order`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
       });
 
       const data = await response.json();
@@ -87,16 +96,20 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
     razorpay_payment_id,
     razorpay_order_id
   ) => {
-    const formData = new FormData();
-    formData.append("razorpay_signature", razorpay_signature);
-    formData.append("transaction_id", transaction_id);
-    formData.append("razorpay_payment_id", razorpay_payment_id);
-    formData.append("razorpay_order_id", razorpay_order_id);
+    const dataToSend = {
+      razorpay_signature,
+      transaction_id,
+      razorpay_payment_id,
+      razorpay_order_id,
+    };
 
     try {
       const response = await fetch(`${backendUrl}/payment/verify`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
       });
 
       const data = await response.json();

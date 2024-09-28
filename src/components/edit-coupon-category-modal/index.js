@@ -5,19 +5,19 @@ import { backendApi } from "@/data";
 const EditCouponCategoryModal = ({ onClose, category }) => {
   const [name, setName] = useState(category.name);
   const [price, setPrice] = useState(category.price);
-  const [isActive, setIsActive] = useState(category.is_active);
+  const [isActive, setIsActive] = useState(category.isActive);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${backendApi.edit_coupon_category}${category.id}`,
+        `${backendApi.edit_coupon_category}${category._id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, price, is_active: isActive }),
+          body: JSON.stringify({ name, price, isActive: isActive }),
         }
       );
 
@@ -58,7 +58,7 @@ const EditCouponCategoryModal = ({ onClose, category }) => {
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 cursor-pointer">
             <label className="flex items-center">
               <input
                 type="checkbox"

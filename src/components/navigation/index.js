@@ -13,13 +13,13 @@ const NavigationMenu = () => {
 
   // Define navigation data based on user role
   const getNavigationData = () => {
-    if (user?.is_admin) {
+    if (user?.isAdmin) {
       return [
         { title: "Dashboard", path: "/admin/dashboard" },
         { title: "Manage Users", path: "/admin/users" },
         { title: "Coupon Category", path: "/admin/coupon-category" },
       ];
-    } else if (user?.is_staff) {
+    } else if (user?.isStaff) {
       return [
         { title: "Coupons", path: "/staff/coupons" },
         { title: "Orders", path: "/staff/orders" },

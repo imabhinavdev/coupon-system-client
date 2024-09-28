@@ -27,7 +27,7 @@ export const SiteLinks = {
 };
 
 // export const backendUrl = "http://4.188.68.185:8080/api/v1";
-export const backendUrl = "http://localhost:8080/api/v1";
+export const backendUrl = "/api";
 // export const backendUrl = "http://192.168.0.6:8080/api/v1";
 
 export const backendApi = {
@@ -42,9 +42,10 @@ export const backendApi = {
   verify_coupon: `${backendUrl}/coupon/verify/`,
   who_am_i: `${backendUrl}/auth/whoami/`,
   history: `${backendUrl}/transactions/`,
-  other_users: `${backendUrl}/users/?other_users=true/`,
-  staff_users: `${backendUrl}/users/?is_staff=true/`,
-  admin_users: `${backendUrl}/users/?is_admin=true/`,
+  other_users: `${backendUrl}/users/?otherUsers=true/`,
+  staff_users: `${backendUrl}/users/?isStaff=true/`,
+  admin_users: `${backendUrl}/users/?isAdmin=true/`,
+  search_users: `${backendUrl}/users/?search=`,
   coupon_category: `${backendUrl}/coupon-category/`,
   revenue_by_category: `${backendUrl}/transactions/revenue/by-category/`,
   revenue_over_time: `${backendUrl}/transactions/revenue/stats/`,

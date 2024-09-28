@@ -24,10 +24,9 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backendApi.coupons}?user_id=${user.id}&is_used=false`,
+          `${backendApi.coupons}?user_id=${user._id}&is_used=false`,
           {
             method: "GET",
-            credentials: "include",
           }
         );
         const data = await response.json();
@@ -45,7 +44,7 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, [user.id]);
+  }, [user._id]);
 
   return (
     <div className="flex-grow h-full flex items-start justify-center bg-secondary rounded-xl">
@@ -62,20 +61,20 @@ const Orders = () => {
               >
                 <div>
                   <h3 className="md:text-xl text-md font-semibold">
-                    {order.coupon_category.name}
+                    {order.couponCategoryId.name}
                   </h3>
                   <span className="text-sm text-gray-400">
-                    {formatDate(order.created_at)} at{" "}
-                    {formatTime(order.created_at)}
+                    {formatDate(order.createdAt)} at{" "}
+                    {formatTime(order.createdAt)}
                   </span>
-                  <p className="mt-2">₹{order.coupon_category.price}</p>
+                  <p className="mt-2">₹{order.couponCategoryId.price}</p>
                 </div>
                 <button
                   onClick={() =>
                     handleModal({
-                      id: order.id,
-                      user_id: order.user_id,
-                      coupon_category: order.coupon_category,
+                      id: order._id,
+                      userId: order.userId,
+                      couponCategoryId: order.couponCategoryId._id,
                     })
                   }
                   className="bg-secondary text-primary md:px-4 md:py-2 p-2 text-sm md:text-md  rounded-lg"

@@ -13,15 +13,10 @@ export const UserProvider = ({ children }) => {
       try {
         const response = await fetch(backendApi.who_am_i, {
           method: "GET",
-          credentials: "include",
         });
-        // const response = await fetch(`/api/auth/whoami`, {
-        //   method: "GET",
-        //   credentials: "include",
-        // });
         const data = await response.json();
         if (response.ok) {
-          setUser(data.user.user);
+          setUser(data.user);
         }
       } catch (error) {
         console.error("Error fetching user:", error);

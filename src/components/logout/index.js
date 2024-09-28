@@ -9,11 +9,10 @@ const Logout = ({ className }) => {
     try {
       // const response = await fetch(`/api/auth/logout`, {
       //   method: "POST",
-      //   credentials: "include",
+      //
       // });
       const response = await fetch(backendApi.logout, {
         method: "POST",
-        credentials: "include",
       });
       const data = await response.json();
       if (response.ok) {

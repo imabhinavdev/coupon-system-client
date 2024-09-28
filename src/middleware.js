@@ -7,21 +7,20 @@ export function middleware(request) {
 
   if (token) {
     decodedToken = jwt.decode(token);
-    decodedToken = decodedToken?.user;
     console.log("Decoded Token:", decodedToken);
   }
 
   const path = request.nextUrl.pathname;
 
   if (path.startsWith("/admin")) {
-    if (!token || !decodedToken || !decodedToken.is_admin) {
+    if (!token || !decodedToken || !decodedToken.isAdmin) {
       return NextResponse.redirect(new URL("/user/orders", request.url));
     }
     return NextResponse.next();
   }
 
   if (path.startsWith("/staff")) {
-    if (!token || !decodedToken || !decodedToken.is_staff) {
+    if (!token || !decodedToken || !decodedToken.isStaff) {
       return NextResponse.redirect(new URL("/user/orders", request.url));
     }
     return NextResponse.next();
@@ -31,13 +30,13 @@ export function middleware(request) {
     if (
       token &&
       decodedToken &&
-      !decodedToken.is_staff &&
-      !decodedToken.is_admin
+      !decodedToken.isStaff &&
+      !decodedToken.isAdmin
     ) {
       return NextResponse.next();
-    } else if (decodedToken?.is_admin) {
+    } else if (decodedToken?.isAdmin) {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    } else if (decodedToken?.is_staff) {
+    } else if (decodedToken?.isStaff) {
       return NextResponse.redirect(new URL("/staff/dashboard", request.url));
     }
   }

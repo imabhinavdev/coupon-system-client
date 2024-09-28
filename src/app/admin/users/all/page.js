@@ -14,7 +14,6 @@ const AdminUsersPage = () => {
       try {
         const response = await fetch(backendApi.other_users, {
           method: "GET",
-          credentials: "include",
         });
         const data = await response.json();
         if (response.ok) {
@@ -65,7 +64,7 @@ const AdminUsersPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
         {filteredUsers.map((user) => (
           <div
-            key={user.id}
+            key={user._id}
             className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
           >
             <h2 className="text-xl font-semibold text-gray-700 mb-2">

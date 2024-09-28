@@ -25,23 +25,18 @@ const LoginPage = () => {
         return;
       }
 
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-
-      // const res = await fetch("/api/auth/login", {
-      //   method: "POST",
-      //   credentials: "include",
-      //   body: formData,
-      // });
       const res = await fetch(backendApi.login, {
         method: "POST",
-        credentials: "include",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (res.ok) {
         toast.success("Logged in successfully");
+        console.log(data);
         window.location.reload();
       } else {
         toast.error(data.error || "An error occurred. Please try again");

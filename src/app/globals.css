@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* media query for mobile screen */
+/* Add this to your CSS file */
+@media (max-width: 640px) {
+    .overflow-x-auto {
+        overflow-x: auto;
+    }
+
+    .flex-nowrap {
+        flex-wrap: nowrap;
+    }
+}

@@ -23,15 +23,14 @@ const HistoryPage = () => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `${backendApi.history}?user_id=${user.id}`,
+          `${backendApi.history}?user_id=${user._id}`,
           {
             method: "GET",
-            credentials: "include",
           }
         );
         const data = await response.json();
         if (response.ok) {
-          setTransactions(data.transactions);
+          setTransactions(data);
         }
       } catch (error) {
         console.error("Error fetching transactions:", error);
@@ -40,7 +39,7 @@ const HistoryPage = () => {
     };
 
     fetchOrders();
-  }, [user.id]);
+  }, [user._id]);
 
   return (
     <>
@@ -82,26 +81,26 @@ const HistoryPage = () => {
                     >
                       <td className="py-3 px-4 text-secondary">{idx + 1}</td>
                       <td className="py-3 px-4 text-secondary">
-                        {transaction.coupon_category.name}
+                        {transaction.couponCategoryId.name}
                       </td>
                       <td className="py-3 px-4 text-secondary">
-                        {formatDate(transaction.created_at)}
+                        {formatDate(transaction.createdAt)}
                       </td>
                       <td className="py-3 px-4 text-secondary">
-                        {formatTime(transaction.created_at)}
+                        {formatTime(transaction.createdAt)}
                       </td>
                       <td className="py-3 px-4 text-secondary">
-                        ₹{transaction.coupon_category.price}
+                        ₹{transaction.couponCategoryId.price}
                       </td>
                       <td className="py-3 px-4">
                         <span
                           className={`font-semibold ${
-                            transaction.is_captured
+                            transaction.isCaptured
                               ? "text-green-500"
                               : "text-red-500"
                           }`}
                         >
-                          {transaction.is_captured ? "Success" : "Failed"}
+                          {transaction.isCaptured ? "Success" : "Failed"}
                         </span>
                       </td>
                     </tr>

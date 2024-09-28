@@ -33,29 +33,22 @@ const Signup = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("phone", phone);
-
-    if (userType === "student") {
-      formData.append("enrollment", enrollment);
-    }
+    const dataToSend = {
+      email,
+      password,
+      phone,
+      name,
+      enrollment,
+    };
 
     const saveUser = async () => {
       try {
-        // const res = await fetch("/api/auth/signup", {
-        //   method: "POST",
-        //   credentials: "include",
-
-        //   body: formData, // No need to set 'Content-Type'
-        // });
         const res = await fetch(backendApi.signup, {
           method: "POST",
-          credentials: "include",
-
-          body: formData, // No need to set 'Content-Type'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSend),
         });
         const data = await res.json();
         if (res.ok) {
