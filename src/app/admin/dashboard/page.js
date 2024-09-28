@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   const [revenueOverTime, setRevenueOverTime] = useState([]);
   const [transactionsByWeekday, setTransactionsByWeekday] = useState([]);
   const [couponStatsByWeekday, setCouponStatsByWeekday] = useState([]);
-  const [totalRevenue, setTotalRevenue] = useState(null);
+  const [totalRevenue, setTotalRevenue] = useState([]);
 
   const [activeTab, setActiveTab] = useState("profile"); // Add state to track active tab
 

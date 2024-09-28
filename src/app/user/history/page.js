@@ -11,7 +11,7 @@ import { formatTime } from "@/utils/FormatTime";
 const HistoryPage = () => {
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedCoupon, setSelectedCoupon] = useState(null);
+  const [selectedCoupon, setSelectedCoupon] = useState([]);
   const { user } = useContext(UserContext);
 
   const handleModal = (coupon = null) => {
