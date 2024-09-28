@@ -10,7 +10,6 @@ import Logout from "../logout";
 const NavigationMenu = () => {
   const [state, setState] = useState(false);
   const { user } = useContext(UserContext);
-
   // Define navigation data based on user role
   const getNavigationData = () => {
     if (user?.isAdmin) {
@@ -124,7 +123,7 @@ const NavigationMenu = () => {
                 </Link>
               </>
             ) : (
-              <>
+                <>
                 <h1>Hello, {user.name}</h1>
                 <Logout className="bg-secondary text-primary rounded-lg p-2 px-4" />
               </>
