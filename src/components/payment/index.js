@@ -6,7 +6,7 @@ import CouponModal from "@/components/coupon-modal";
 import { toast } from "react-toastify";
 
 const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
-  const [coupon, setCoupon] = useState([]);
+  const [coupon, setCoupon] = useState();
   const { user } = useContext(UserContext);
 
   const [razorpayReady, setRazorpayReady] = useState(false); // State to check if Razorpay is loaded
