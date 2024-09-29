@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
+import { Html5Qrcode } from "html5-qrcode";
 import { CrossIcon, LoadingIcon } from "@/components/icons";
 import { backendApi } from "@/data";
 import { toast } from "react-toastify";
-import { UserContext } from "@/context/user";
+import { UserContext } from "@/context/UserContext";
 
 const QRScannerModal = () => {
   const [data, setData] = useState();
