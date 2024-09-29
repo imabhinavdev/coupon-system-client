@@ -61,7 +61,7 @@ const LoginPage = () => {
               Log in to your account
             </h3>
             <p>
-              Don&apos;t have an account?
+              Don&apos;t have an account?{" "}
               <Link
                 href={SiteLinks.signup.link}
                 className="font-medium text-indigo-600 hover:text-indigo-500"

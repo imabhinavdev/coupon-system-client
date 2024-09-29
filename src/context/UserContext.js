@@ -1,6 +1,7 @@
 "use client";
 import { useState, createContext, useEffect } from "react";
-import { backendApi, backendUrl } from "@/data";
+import { backendApi } from "@/data";
+import Skeleton from "react-loading-skeleton";
 
 export const UserContext = createContext();
 
@@ -21,19 +22,20 @@ export const UserProvider = ({ children }) => {
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
     fetchUser();
   }, []);
 
-  // Return a loading indicator while fetching user data
+  const Loader = () => (
+    <div className="skeleton">
+      <Skeleton height="100%" containerClassName="flex-1 h-full" />
+    </div>
+  );
+
   if (loading) {
-    return (
-      <div className="flex w-full h-full justify-center items-center">
-        Loading...
-      </div>
-    ); // You can customize this loading component
+    return <Loader />;
   }
 
   return (

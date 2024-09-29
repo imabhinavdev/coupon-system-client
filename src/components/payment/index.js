@@ -4,19 +4,24 @@ import { UserContext } from "@/context/UserContext";
 import { backendUrl } from "@/data";
 import CouponModal from "@/components/coupon-modal";
 import { toast } from "react-toastify";
+import { LoadingIcon } from "@/components/icons";
 
 const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   const [coupon, setCoupon] = useState();
   const { user } = useContext(UserContext);
-
-  const [razorpayReady, setRazorpayReady] = useState(false); // State to check if Razorpay is loaded
+  const [razorpayReady, setRazorpayReady] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadRazorpay = () => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => setRazorpayReady(true);
-      script.onerror = () => console.error("Failed to load Razorpay script");
+      script.onload = () => {
+        setRazorpayReady(true);
+      };
+      script.onerror = () => {
+        console.error("Failed to load Razorpay script");
+      };
       document.body.appendChild(script);
     };
 
@@ -25,11 +30,8 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const formData = new FormData();
-    formData.append("coupon_category_id", coupon_category.id);
-    formData.append("user_id", user._id);
-    formData.append("coupon_category_price", coupon_category.price);
     const dataToSend = {
       coupon_category_id: coupon_category._id,
       user_id: user._id,
@@ -46,13 +48,15 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
       });
 
       const data = await response.json();
+      setLoading(false);
+
       const orderID = data.data.id;
       const transactionId = data.data.transaction_id;
 
       if (razorpayReady) {
         var options = {
-          key: "rzp_test_FivlgkZZzZspfT", // Enter the Key ID generated from the Dashboard
-          amount: `${coupon_category.price}00`, // Amount is in currency subunits. Default currency is INR.
+          key: "rzp_test_FivlgkZZzZspfT",
+          amount: `${coupon_category.price}00`,
           currency: "INR",
           name: "Ikshana",
           description: "Test Transaction",
@@ -81,7 +85,7 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
           toast.error("Payment failed");
         });
 
-        rzp1.open(); // Trigger the payment
+        rzp1.open();
       } else {
         console.error("Razorpay is not ready");
       }
@@ -132,10 +136,19 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   return (
     <>
       <button
-        className="bg-primary text-secondary text-sm md:text-md rounded-lg px-4 py-2"
+        className={`${
+          loading ? "bg-gray-200" : "bg-primary"
+        } text-secondary text-sm md:text-md rounded-lg px-4 py-2`}
         onClick={handlePayment}
+        disabled={loading}
       >
-        {label}
+        {loading ? (
+          <>
+            <LoadingIcon color="#000" />
+          </>
+        ) : (
+          label
+        )}
       </button>
       {coupon && (
         <CouponModal

@@ -14,3 +14,7 @@
         flex-wrap: nowrap;
     }
 }
+
+.skeleton{
+    height: 99vh;
+}

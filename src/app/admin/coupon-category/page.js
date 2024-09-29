@@ -30,7 +30,7 @@ const AdminCouponCategoryDashboard = () => {
       }
     };
     fetchCouponCategory();
-  }, [isEditModalOpen]);
+  }, [isEditModalOpen,isModalOpen]);
 
   const filteredCategories = couponCategory.filter((category) =>
     category.name?.toLowerCase().includes(searchTerm.toLowerCase())

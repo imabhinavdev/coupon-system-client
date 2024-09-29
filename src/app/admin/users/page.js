@@ -135,7 +135,7 @@ const ManageUsersPage = () => {
                       <p className="font-medium text-blue-500">{user.name}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
-                    <span className="text-gray-500">{user.role}</span>
+                    <span className="text-gray-500">{user.phone}</span>
                   </div>
                 ))}
               </div>

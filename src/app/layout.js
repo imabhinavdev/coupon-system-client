@@ -6,6 +6,8 @@ import Footer from "@/components/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/context/UserContext";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weights: [400, 500, 700],

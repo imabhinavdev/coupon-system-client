@@ -33,6 +33,7 @@ export const backendUrl = "/api";
 export const backendApi = {
   login: `${backendUrl}/auth/login/`,
   signup: `${backendUrl}/auth/signup/`,
+  verify_account: `${backendUrl}/auth/verify/`,
   logout: `${backendUrl}/auth/logout/`,
   coupons: `${backendUrl}/coupon/`,
   active_coupon_category: `${backendUrl}/coupon-category/?isActive=true`,
