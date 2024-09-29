@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
 import { CrossIcon, LoadingIcon } from "@/components/icons";
 import { backendApi } from "@/data";
 import { toast } from "react-toastify";
+import { UserContext } from "@/context/user";
 
 const QRScannerModal = () => {
   const [data, setData] = useState();
@@ -11,7 +12,7 @@ const QRScannerModal = () => {
   const html5QrcodeScannerRef = useRef(null);
   const [scanner, setScanner] = useState(null);
   const [rearCameraId, setRearCameraId] = useState(null);
-
+  const { user } = useContext(UserContext);
   // Request camera permissions and find the rear camera
   const getCameraPermissions = async () => {
     try {
@@ -72,11 +73,16 @@ const QRScannerModal = () => {
         `${backendApi.verify_coupon}${coupon.couponId}`,
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ scannedBy: user._id }),
         }
       );
       const data = await response.json();
       if (response.ok) {
         toast.success(data.message);
+        closeModal();
       } else {
         console.log(data);
         toast.error(data.message);
