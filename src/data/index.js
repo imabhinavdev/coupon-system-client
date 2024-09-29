@@ -1,3 +1,5 @@
+import { update } from "lodash";
+
 export const SiteLinks = {
   login: {
     title: "Login",
@@ -14,6 +16,10 @@ export const SiteLinks = {
   admin_all_users: {
     title: "All Users",
     link: "/admin/users/all",
+  },
+  manage_single_user: {
+    title: "Manage User",
+    link: "/admin/users/manage",
   },
 
   admin_staff_users: {
@@ -52,4 +58,6 @@ export const backendApi = {
   revenue_over_time: `${backendUrl}/transactions/revenue/stats/`,
   revenue_by_weekday: `${backendUrl}/coupon/used-by-weekdays/`,
   total_revenue: `${backendUrl}/transactions/revenue/`,
+  all_details_of_user: `${backendUrl}/users/all-details`,
+  update_user: `${backendUrl}/users/`,
 };

@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import DashboardCard from "@/components/dashboard-card";
 import { SiteLinks, backendApi } from "@/data";
 import { debounce } from "lodash";
+import { ThreeDotsIcon } from "@/components/icons";
+import Link from "next/link";
 
 const ManageUsersPage = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
@@ -85,7 +87,7 @@ const ManageUsersPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">
         <h1 className="text-2xl font-bold">Manage Users</h1>
         <div className="flex items-center space-x-4 w-full md:w-auto">
@@ -126,17 +128,20 @@ const ManageUsersPage = () => {
             {isSearchBoxOpen && searchResults.length > 0 && (
               <div className="absolute left-0 right-0 bg-white shadow-lg rounded-lg border border-gray-200 max-h-60 w-full overflow-y-auto z-20 mt-2">
                 {searchResults.map((user, index) => (
-                  <div
+                  <Link
                     key={index}
+                    href={`${SiteLinks.manage_single_user.link}/${user._id}`}
                     className="flex items-center justify-between px-4 py-2 hover:bg-gray-100 cursor-pointer transition ease-in-out duration-200"
-                    onClick={() => alert(`User selected: ${user.name}`)} // Handle user selection
+                    // Handle user selection
                   >
                     <div>
                       <p className="font-medium text-blue-500">{user.name}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
-                    <span className="text-gray-500">{user.phone}</span>
-                  </div>
+                    {/* <span className="text-gray-500">
+                    <ThreeDotsIcon />
+                    </span> */}
+                  </Link>
                 ))}
               </div>
             )}

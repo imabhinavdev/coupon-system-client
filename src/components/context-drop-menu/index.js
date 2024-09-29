@@ -84,7 +84,7 @@ const DropdownMenu = ({ onDelete, onEdit, onToggleActive, category }) => {
 
       {showConfirmation && (
         <ConfirmationModal
-          label={`Are you sure you want to delete ${category} item?`}
+          label={`Are you sure you want to delete ${category} ?`}
           onConfirm={confirmDelete}
           onCancel={cancelDelete}
         />
