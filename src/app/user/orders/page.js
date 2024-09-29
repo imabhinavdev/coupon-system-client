@@ -62,9 +62,9 @@ const Orders = () => {
                 key={index}
                 className="bg-primary text-secondary px-6 py-2 rounded-xl shadow-lg flex justify-between items-center"
               >
-                <Skeleton height={50} width={150} />
-                <Skeleton height={20} width={100} />
-                <Skeleton height={30} width={80} />
+                <Skeleton height={50} width="80%" />
+                <Skeleton height={20} width="70%" />
+                <Skeleton height={30} width="65%" />
               </div>
             ))}
           </div>
