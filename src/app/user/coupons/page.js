@@ -36,20 +36,21 @@ const Coupons = () => {
       {loading ? (
         [...Array(3)].map((_, index) => (
           <div
-            className="bg-secondary flex justify-between items-center text-primary rounded-xl px-12 py-4"
+            className="bg-secondary flex flex-col md:flex-row justify-between items-start md:items-center text-primary rounded-xl px-4 py-6 md:px-12 md:py-4"
             key={index}
           >
-            <div>
-              <Skeleton height={30} width={150} />
-              <Skeleton height={20} width={100} />
+            <div className="w-full">
+              {/* Adjust skeleton width and height for mobile */}
+              <Skeleton height={25} width={"80%"} className="mb-2" />
+              <Skeleton height={20} width={"60%"} />
             </div>
-            <Skeleton height={40} width={100} />
+            <Skeleton height={40} width={80} className="mt-4 md:mt-0" />
           </div>
         ))
       ) : couponCategory.length > 0 ? (
         couponCategory.map((coupon) => (
           <div
-            className="bg-secondary flex justify-between items-center text-primary rounded-xl px-12 py-4"
+            className="bg-secondary flex justify-between items-center text-primary rounded-xl px-4 py-6 md:px-12 md:py-4"
             key={coupon.id}
           >
             <div>

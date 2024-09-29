@@ -5,12 +5,14 @@ import { backendUrl } from "@/data";
 import CouponModal from "@/components/coupon-modal";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "@/components/icons";
+import { set } from "lodash";
 
 const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
   const [coupon, setCoupon] = useState();
   const { user } = useContext(UserContext);
   const [razorpayReady, setRazorpayReady] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [qrLoading, setQrLoading] = useState(false);
 
   useEffect(() => {
     const loadRazorpay = () => {
@@ -58,8 +60,8 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
           key: "rzp_test_FivlgkZZzZspfT",
           amount: `${coupon_category.price}00`,
           currency: "INR",
-          name: "Ikshana",
-          description: "Test Transaction",
+          name: "Coupon System",
+          description: "One Stop for all your coupon needs",
           image: "https://example.com/your_logo",
           order_id: orderID,
           handler: function (response) {
@@ -100,6 +102,7 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
     razorpay_payment_id,
     razorpay_order_id
   ) => {
+    setQrLoading(true);
     const dataToSend = {
       razorpay_signature,
       transaction_id,
@@ -125,6 +128,8 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
       setCoupon(couponData);
     } catch (error) {
       console.error("Error during payment verification:", error);
+    } finally {
+      setQrLoading(false);
     }
   };
 
@@ -156,6 +161,13 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
           isOpen={modalOpen}
           onClose={handleOnClose}
         />
+      )}
+
+      {/* Modal of loading animation */}
+      {qrLoading && (
+        <div className="fixed p-2 md:p-0 inset-0  bg-opacity-50 flex justify-center items-center z-50">
+          <LoadingIcon color="#000" className="w-10 h-10" />
+        </div>
       )}
     </>
   );

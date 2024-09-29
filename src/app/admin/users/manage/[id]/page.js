@@ -141,23 +141,29 @@ const ManageUserData = () => {
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="p-2 border">Order ID</th>
-                      <th className="p-2 border">Coupon Category ID</th>
+                      <th className="p-2 border">Coupon Category</th>
                       <th className="p-2 border">Day</th>
                       <th className="p-2 border">Used</th>
+                      <th className="p-2 border">Scanned By</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.orders.map((order, index) => (
                       <tr key={index}>
-                        <td className="p-2 border">{order._id}</td>
-                        <td className="p-2 border">{order.couponCategoryId}</td>
-                        <td className="p-2 border">{order.day}</td>
+                        <td className="p-2 border text-center">{order._id}</td>
+                        <td className="p-2 border text-center">
+                          {order.couponCategoryId.name}
+                        </td>
+                        <td className="p-2 border text-center">{order.day}</td>
                         <td
-                          className={`p-2 border ${
+                          className={`p-2 border text-center ${
                             order.isUsed ? "text-green-500" : "text-red-500"
                           } `}
                         >
                           {order.isUsed ? "Yes" : "No"}
+                        </td>
+                        <td className="p-2 border text-center">
+                          {order.scannedBy ? order.scannedBy.name : "-"}
                         </td>
                       </tr>
                     ))}
@@ -176,26 +182,38 @@ const ManageUserData = () => {
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="p-2 border">Transaction ID</th>
-                      <th className="p-2 border">Coupon Category ID</th>
+                      <th className="p-2 border">Coupon Category</th>
                       <th className="p-2 border">Day</th>
                       <th className="p-2 border">Time</th>
                       <th className="p-2 border">Amount</th>
+                      <th className="p-2 border">is Captured?</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.transactions.map((transaction, index) => (
                       <tr key={index}>
-                        <td className="p-2 border">{transaction._id}</td>
-                        <td className="p-2 border">
-                          {transaction.couponCategoryId}
+                        <td className="p-2 border text-center">
+                          {transaction._id}
                         </td>
-                        <td className="p-2 border min-w-fit text-nowrap">
+                        <td className="p-2 border text-center">
+                          {transaction.couponCategoryId.name}
+                        </td>
+                        <td className="p-2 border text-center min-w-fit text-nowrap">
                           {formatDate(transaction.createdAt)}
                         </td>
-                        <td className="p-2 border min-w-fit text-nowrap">
+                        <td className="p-2 border text-center min-w-fit text-nowrap">
                           {formatTime(transaction.createdAt)}
                         </td>
-                        <td className="p-2 border">₹ {transaction.amount}</td>
+                        <td className="p-2 border text-center">
+                          ₹ {transaction.amount}
+                        </td>
+                        <td
+                          className={`p-2 border text-center ${
+                            transaction.isCaptured ? "text-green-500" : "text-red-500"
+                          } `}
+                        >
+                          {transaction.isCaptured ? "Yes" : "No"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
