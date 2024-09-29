@@ -16,7 +16,6 @@ const Logout = ({ className }) => {
       });
       const data = await response.json();
       if (response.ok) {
-        setUser(null);
         window.location.reload();
       }
     } catch (error) {

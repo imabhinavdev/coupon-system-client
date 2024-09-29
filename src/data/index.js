@@ -30,6 +30,10 @@ export const SiteLinks = {
     title: "Admin Users",
     link: "/admin/users/admins",
   },
+  forgot_password: {
+    title: "Forgot Password",
+    link: "/auth/forgot-password",
+  },
 };
 
 // export const backendUrl = "http://4.188.68.185:8080/api/v1";
@@ -60,4 +64,6 @@ export const backendApi = {
   total_revenue: `${backendUrl}/transactions/revenue/`,
   all_details_of_user: `${backendUrl}/users/all-details`,
   update_user: `${backendUrl}/users/`,
+  forgot_password_email: `${backendUrl}/auth/forgot-password/`,
+  reset_password: `${backendUrl}/auth/reset-password/`,
 };

@@ -14,13 +14,16 @@ import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userType, setUserType] = useState("student");
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState(null);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
   const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
   const enrollmentRef = useRef(null);
   const phoneRef = useRef(null);
   const nameRef = useRef(null);
@@ -30,16 +33,37 @@ const Signup = () => {
     setShowPassword(!showPassword);
   };
 
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const handleConfirmPasswordChange = () => {
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+    if (confirmPassword && password !== confirmPassword) {
+      setPasswordMatchError(true);
+    } else {
+      setPasswordMatchError(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
     const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
     const enrollment = enrollmentRef.current?.value;
     const phone = phoneRef.current.value;
     const name = nameRef.current.value;
 
     if (!email || !password || !phone || !name) {
       toast.error("Please fill all the fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      setLoading(false);
       return;
     }
 
@@ -224,55 +248,81 @@ const Signup = () => {
                   </span>
                 </div>
 
+                <div className="relative">
+                  <label className="font-medium">Confirm Password</label>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    minLength="8"
+                    ref={confirmPasswordRef}
+                    onChange={handleConfirmPasswordChange}
+                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                  />
+                  <span
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="absolute right-3 top-10 cursor-pointer"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOpenIcon className="h-6 w-6" />
+                    ) : (
+                      <EyeCloseIcon className="h-6 w-6" />
+                    )}
+                  </span>
+                  {passwordMatchError && (
+                    <p className="text-red-600 text-sm mt-2">
+                      Passwords do not match
+                    </p>
+                  )}
+                </div>
+
                 <button
                   type="submit"
-                  className={`w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 flex justify-center items-center`}
+                  disabled={loading}
+                  className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                 >
-                  {loading ? <LoadingIcon color="#fff" /> : "Create Account"}
+                  {loading ? (
+                    <LoadingIcon className="h-5 w-5 animate-spin mx-auto" />
+                  ) : (
+                    "Create account"
+                  )}
                 </button>
               </form>
-              <div className="mt-5">
-                <button className="w-full flex items-center justify-center gap-x-3 py-2.5 mt-5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
-                  <GoogleIcon className="h-5 w-5" />
-                  Continue with Google
-                </button>
-              </div>
             </div>
           </>
         ) : (
           <>
             <div className="text-center">
-              <SiteIcon />
-              <div className="mt-5 space-y-2">
-                <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
-                  Verify Your Account
-                </h3>
-                <p>
-                  Enter the OTP sent to your email to complete the signup
-                  process.
-                </p>
-              </div>
+              <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
+                Verify OTP
+              </h3>
+              <p className="mt-2 text-sm">
+                An OTP has been sent to your email. Please enter it below.
+              </p>
             </div>
-            <form
-              className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg space-y-5"
-              onSubmit={handleVerify}
-            >
-              <div>
-                <label className="font-medium">OTP</label>
-                <input
-                  type="text"
-                  required
-                  ref={otpRef}
-                  className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 justify-center flex items-center gap-x-2"
-              >
-                {loading ? <LoadingIcon color="#fff" /> : "Verify Account"}
-              </button>
-            </form>
+            <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
+              <form className="space-y-5" onSubmit={handleVerify}>
+                <div>
+                  <label className="font-medium">OTP</label>
+                  <input
+                    type="text"
+                    required
+                    ref={otpRef}
+                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                >
+                  {loading ? (
+                    <LoadingIcon className="h-5 w-5 animate-spin mx-auto" />
+                  ) : (
+                    "Verify OTP"
+                  )}
+                </button>
+              </form>
+            </div>
           </>
         )}
       </div>
