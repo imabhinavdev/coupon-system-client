@@ -1,5 +1,10 @@
 "use client";
-import { EyeCloseIcon, EyeOpenIcon, GoogleIcon } from "@/components/icons";
+import {
+  EyeCloseIcon,
+  EyeOpenIcon,
+  GoogleIcon,
+  LoadingIcon,
+} from "@/components/icons";
 import SiteIcon from "@/components/site-title";
 import { backendApi, SiteLinks } from "@/data";
 import { toast } from "react-toastify";
@@ -10,6 +15,7 @@ import { useRouter } from "next/navigation";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("student");
+  const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState(null);
   const router = useRouter();
@@ -25,6 +31,7 @@ const Signup = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     const password = passwordRef.current.value;
     const enrollment = enrollmentRef.current?.value;
@@ -56,6 +63,7 @@ const Signup = () => {
         const data = await res.json();
         if (res.ok) {
           toast.success(data.message);
+          setLoading(false);
           setOtpSent(true);
         } else {
           toast.error(data.error || "An error occurred. Please try again");
@@ -69,6 +77,7 @@ const Signup = () => {
   };
 
   const handleVerify = (e) => {
+    setLoading(true);
     e.preventDefault();
     const otp = otpRef.current.value;
 
@@ -217,9 +226,9 @@ const Signup = () => {
 
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                  className={`w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150`}
                 >
-                  Create account
+                  {loading ? <LoadingIcon /> : "Create Account"}
                 </button>
               </form>
               <div className="mt-5">
@@ -259,9 +268,9 @@ const Signup = () => {
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 justify-center flex items-center gap-x-2"
               >
-                Verify Account
+                {loading ? <LoadingIcon color="#fff" /> : "Verify Account"}
               </button>
             </form>
           </>
