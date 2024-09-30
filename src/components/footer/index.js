@@ -5,7 +5,11 @@ const Footer = () => {
     <div className="w-full p-3 bg-gray-800 flex justify-center rounded-t-md">
       <p className="text-primary text-center">
         {" "}
-        Mady with ❤ by Abhinav Singh & Yash Soni | Copyright &#169; Coupon System
+        Mady with ❤ by{" "}
+        <a href="https://imabhinav.dev" className="no-underline text-blue-600">
+          Abhinav Singh
+        </a>{" "}
+        & Yash Soni | Copyright &#169; Coupon System
       </p>
     </div>
   );
