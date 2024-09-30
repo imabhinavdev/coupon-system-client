@@ -6,7 +6,7 @@ const Footer = () => {
       <p className="text-primary text-center">
         {" "}
         Mady with ❤ by{" "}
-        <a href="https://imabhinav.dev" className="no-underline text-blue-600">
+        <a href="https://imabhinav.dev" className="no-underline text-blue-400">
           Abhinav Singh
         </a>{" "}
         & Yash Soni | Copyright &#169; Coupon System
