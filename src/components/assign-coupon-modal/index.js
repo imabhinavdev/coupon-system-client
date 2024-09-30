@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { backendApi } from "@/data";
 
 const AssignCouponModal = ({ userId, isOpen, onClose }) => {
-  if (!isOpen) return null;
   const [couponCategories, setCouponCategories] = useState([]);
 
   const couponCategoryIdRef = useRef(null);
@@ -37,7 +36,7 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-           userId,
+          userId,
           noOfPerson,
           couponCategoryId,
         }),
@@ -55,7 +54,6 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
     }
   };
   if (!isOpen) return null;
-
   return (
     <div className="fixed p-2 md:p-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
