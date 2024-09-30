@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { DeleteIcon, EditIcon, ThreeDotsIcon } from "../icons";
+import { AddCouponIcon, DeleteIcon, EditIcon, ThreeDotsIcon } from "../icons";
 import ConfirmationModal from "@/components/confirmation-modal";
 
-const DropdownMenu = ({ onDelete, onEdit, onToggleActive, category }) => {
+const DropdownMenu = ({
+  onDelete,
+  onEdit,
+  onToggleActive,
+  category,
+  onAssign,
+  showAssignCoupon = false,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const menuRef = useRef(null);
@@ -78,6 +85,17 @@ const DropdownMenu = ({ onDelete, onEdit, onToggleActive, category }) => {
               </span>
               <span>Delete</span>
             </button>
+            {showAssignCoupon && (
+              <button
+                onClick={onAssign}
+                className="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-gray-100 w-full text-left"
+              >
+                <span>
+                  <AddCouponIcon color="blue" className="text-red-600" />
+                </span>
+                <span>Assign Coupon</span>
+              </button>
+            )}
           </div>
         </div>
       )}

@@ -107,7 +107,7 @@ const AdminDashboard = () => {
         </h1>
       </div>
       {/* Tabs */}
-      <div className="mb-4 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+      <div className="mb-4 border-b border-gray-200 dark:border-gray-700 overflow-x-auto overflow-y-hidden">
         <ul
           className="flex flex-nowrap -mb-px text-sm font-medium text-center"
           role="tablist"

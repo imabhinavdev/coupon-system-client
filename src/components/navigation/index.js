@@ -12,13 +12,13 @@ const NavigationMenu = () => {
   const { user } = useContext(UserContext);
   // Define navigation data based on user role
   const getNavigationData = () => {
-    if (user?.isAdmin) {
+    if (user?.role === "admin") {
       return [
         { title: "Dashboard", path: "/admin/dashboard" },
         { title: "Manage Users", path: "/admin/users" },
         { title: "Coupon Category", path: "/admin/coupon-category" },
       ];
-    } else if (user?.isStaff) {
+    } else if (user?.role === "staff") {
       return [
         { title: "Coupons", path: "/staff/coupons" },
         { title: "Orders", path: "/staff/orders" },
@@ -123,7 +123,7 @@ const NavigationMenu = () => {
                 </Link>
               </>
             ) : (
-                <>
+              <>
                 <h1>Hello, {user.name}</h1>
                 <Logout className="bg-secondary text-primary rounded-lg p-2 px-4" />
               </>

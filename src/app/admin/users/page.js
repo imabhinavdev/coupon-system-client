@@ -45,7 +45,6 @@ const ManageUsersPage = () => {
         const response = await fetch(`${backendApi.search_users}${query}`);
         const data = await response.json();
         if (response.ok) {
-          console.log(data.users);
           setSearchResults(data.users);
           setIsSearchBoxOpen(true); // Show search results
         } else {

@@ -4,39 +4,36 @@ import jwt from "jsonwebtoken";
 export function middleware(request) {
   const token = request.cookies?.get("token")?.value;
   let decodedToken = null;
+  let role = null;
 
   if (token) {
     decodedToken = jwt.decode(token);
-    console.log("Decoded Token:", decodedToken);
+    role = decodedToken.role;
   }
 
   const path = request.nextUrl.pathname;
 
   if (path.startsWith("/admin")) {
-    if (!token || !decodedToken || !decodedToken.isAdmin) {
+    if (!token || !decodedToken || !(role === "admin")) {
       return NextResponse.redirect(new URL("/user/orders", request.url));
     }
     return NextResponse.next();
   }
 
   if (path.startsWith("/staff")) {
-    if (!token || !decodedToken || !decodedToken.isStaff) {
+    if (!token || !decodedToken || !role === "staff") {
       return NextResponse.redirect(new URL("/user/orders", request.url));
     }
     return NextResponse.next();
   }
 
-  if (path.startsWith("/user")) {
-    if (
-      token &&
-      decodedToken &&
-      !decodedToken.isStaff &&
-      !decodedToken.isAdmin
-    ) {
+  if (path.startsWith("/user")) {;
+    console.log(!(role === "admin"));
+    if (token && decodedToken && !(role === "staff") && !(role === "admin")) {
       return NextResponse.next();
-    } else if (decodedToken?.isAdmin) {
+    } else if (role === "admin") {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    } else if (decodedToken?.isStaff) {
+    } else if (role === "staff") {
       return NextResponse.redirect(new URL("/staff/dashboard", request.url));
     }
   }

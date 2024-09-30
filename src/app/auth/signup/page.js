@@ -55,6 +55,7 @@ const Signup = () => {
     const enrollment = enrollmentRef.current?.value;
     const phone = phoneRef.current.value;
     const name = nameRef.current.value;
+    const role = userType;
 
     if (!email || !password || !phone || !name) {
       toast.error("Please fill all the fields");
@@ -73,6 +74,7 @@ const Signup = () => {
       phone,
       name,
       enrollment,
+      role,
     };
 
     const saveUser = async () => {
@@ -175,9 +177,9 @@ const Signup = () => {
                       <input
                         type="radio"
                         name="userType"
-                        value="student"
-                        checked={userType === "student"}
-                        onChange={() => setUserType("student")}
+                        value="user"
+                        checked={userType === "user"}
+                        onChange={() => setUserType("user")}
                         className="mr-2"
                       />
                       Student
@@ -281,7 +283,7 @@ const Signup = () => {
                   className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                 >
                   {loading ? (
-                    <LoadingIcon className="h-5 w-5 animate-spin mx-auto" />
+                    <LoadingIcon color="#fff" className="h-5 w-5 animate-spin mx-auto" />
                   ) : (
                     "Create account"
                   )}

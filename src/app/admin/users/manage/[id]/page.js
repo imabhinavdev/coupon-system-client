@@ -8,12 +8,14 @@ import DropdownMenu from "@/components/context-drop-menu";
 import EditUserModal from "@/components/edit-user-modal";
 import { formatDate } from "@/utils/FormatDate";
 import { formatTime } from "@/utils/FormatTime";
+import AssignCouponModal from "@/components/assign-coupon-modal";
 
 const ManageUserData = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [activeTab, setActiveTab] = useState("orders");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAssignCouponModalOpen, setIsAssignCouponModalOpen] = useState(false);
 
   const fetchDetails = async () => {
     try {
@@ -40,6 +42,9 @@ const ManageUserData = () => {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
+  const closeAssignCouponModal = () => {
+    setIsAssignCouponModalOpen(false);
+  };
 
   const refreshUserData = () => {
     fetchDetails();
@@ -56,7 +61,13 @@ const ManageUserData = () => {
         <h2 className="text-xl md:text-2xl font-semibold mb-4 flex  md:flex-row justify-between items-center">
           User Information
           <span>
-            <DropdownMenu onEdit={openEditModal} />
+            <DropdownMenu
+              onEdit={openEditModal}
+              showAssignCoupon
+              onAssign={() => {
+                setIsAssignCouponModalOpen(true);
+              }}
+            />
           </span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -90,10 +101,8 @@ const ManageUserData = () => {
           </div>
           <div>
             <p>
-              <strong>Is Staff:</strong> {data.user.isStaff ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Is Admin:</strong> {data.user.isAdmin ? "Yes" : "No"}
+              <strong>Role:</strong>
+              <span className="capitalize"> {data.user.role}</span>
             </p>
           </div>
         </div>
@@ -105,6 +114,12 @@ const ManageUserData = () => {
         onClose={closeEditModal}
         userData={data.user}
         onUpdate={refreshUserData}
+      />
+
+      <AssignCouponModal
+        isOpen={isAssignCouponModalOpen}
+        onClose={closeAssignCouponModal}
+        userId={id}
       />
 
       {/* Tabs for Orders and Transactions */}
@@ -154,7 +169,9 @@ const ManageUserData = () => {
                         <td className="p-2 border text-center">
                           {order.couponCategoryId.name}
                         </td>
-                        <td className="p-2 border text-center">{order.day}</td>
+                        <td className="p-2 border text-center">
+                          {formatDate(order.createdAt)}
+                        </td>
                         <td
                           className={`p-2 border text-center ${
                             order.isUsed ? "text-green-500" : "text-red-500"
@@ -209,7 +226,9 @@ const ManageUserData = () => {
                         </td>
                         <td
                           className={`p-2 border text-center ${
-                            transaction.isCaptured ? "text-green-500" : "text-red-500"
+                            transaction.isCaptured
+                              ? "text-green-500"
+                              : "text-red-500"
                           } `}
                         >
                           {transaction.isCaptured ? "Yes" : "No"}

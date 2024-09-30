@@ -82,8 +82,8 @@ const AdminUsersPage = () => {
               {user.is_active ? "Yes" : "No"}
             </p>
             <p className="text-gray-600">
-              <span className="font-semibold">Staff:</span>{" "}
-              {user.isStaff ? "Yes" : "No"}
+              <span className="font-semibold capitalize">Staff:</span>{" "}
+              {user.role}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Verified:</span>{" "}

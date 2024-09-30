@@ -9,8 +9,8 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
     phone: userData.phone,
     enrollment: userData.enrollment,
     isVerified: userData.isVerified,
-    isAdmin: userData.isAdmin,
-    isStaff: userData.isStaff,
+    isActive: userData.isActive,
+    role: userData.role,
   });
 
   const handleChange = (e) => {
@@ -102,10 +102,10 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">Staff</label>
+            <label className="block text-sm font-medium">Active</label>
             <select
-              name="isStaff"
-              value={formData.isStaff}
+              name="isActive"
+              value={formData.isActive}
               onChange={handleChange}
               className="mt-1 block p-2 w-full border border-gray-300 rounded-md"
             >
@@ -114,17 +114,22 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">Admin</label>
+            <label className="block text-sm font-medium">Staff</label>
             <select
-              name="isAdmin"
-              value={formData.isAdmin}
+              name="role"
+              value={formData.role}
               onChange={handleChange}
               className="mt-1 block p-2 w-full border border-gray-300 rounded-md"
             >
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>
+              <option value="user">User</option>
+              <option value="faculty">Faculty</option>
+              <option value="other">Other</option>
+              <option value="superadmin">Superadmin</option>
             </select>
           </div>
+
           <div className="flex justify-end space-x-2 ">
             <button
               type="button"

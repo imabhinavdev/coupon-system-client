@@ -160,7 +160,7 @@ export const LogoutIcon = ({ className }) => (
   </svg>
 );
 
-export const LoadingIcon = ({ className,color="#000" }) => (
+export const LoadingIcon = ({ className, color = "#000" }) => (
   <svg
     version="1.1"
     id="L7"
@@ -269,9 +269,9 @@ export const EditIcon = ({ className }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     stroke="##737373"
-    className={`w-5 h-5 ${className}`}
+    className={`w-4 h-4 ${className}`}
   >
-    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_bgCarrier" strokeWidth={10} />
     <g
       id="SVGRepo_tracerCarrier"
       strokeLinecap="round"
@@ -282,14 +282,14 @@ export const EditIcon = ({ className }) => (
       <path
         d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z"
         stroke="#737373"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />{" "}
       <path
         d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13"
         stroke="#737373"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />{" "}
@@ -343,6 +343,46 @@ export const DeleteIcon = ({ className }) => (
       <path
         d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
         stroke="#e12626"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />{" "}
+    </g>
+  </svg>
+);
+
+export const AddCouponIcon = ({ className, color = "#000" }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={`w-5 h-5 ${className}`}
+  >
+    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g
+      id="SVGRepo_tracerCarrier"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <g id="SVGRepo_iconCarrier">
+      {" "}
+      <path
+        d="M3 10C3 8.34315 4.34315 7 6 7H14C15.6569 7 17 8.34315 17 10V18C17 19.6569 15.6569 21 14 21H6C4.34315 21 3 19.6569 3 18V10Z"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />{" "}
+      <path
+        d="M10 14V11M10 14V17M10 14H13M10 14H7"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />{" "}
+      <path
+        d="M7 3L18 3C19.6569 3 21 4.34315 21 6L21 17"
+        stroke={color}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
