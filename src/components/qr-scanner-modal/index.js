@@ -49,7 +49,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
 
   const fetchData = async (decodedText) => {
     try {
-      const {couponId} = decodedText; // Extract coupon_id from decodedText
+      const { couponId } = decodedText; // Extract coupon_id from decodedText
       const response = await fetch(`${backendApi.verify_coupon}${couponId}`, {
         method: "POST",
         headers: {
@@ -60,8 +60,8 @@ const QRScannerModal = ({ isOpen, onClose }) => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
         toast.success(data.message);
+        toast.success(`Valid for ${data.noOfPerson} person(s)`);
       } else {
         toast.error(data.message);
       }
