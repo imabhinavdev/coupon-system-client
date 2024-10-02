@@ -1,4 +1,3 @@
-import localFont from "next/font/local";
 import "./globals.css";
 import NavigationBar from "@/components/navigation";
 import { DM_Sans } from "next/font/google";
@@ -16,7 +15,7 @@ const dmsans = DM_Sans({
 
 export const metadata = {
   title: "Coupon System",
-  description: "This is a coupon system",
+  description: "This is a coupon system for Event management",
 };
 
 export default function RootLayout({ children }) {
