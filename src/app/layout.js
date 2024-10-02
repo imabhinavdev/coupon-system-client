@@ -15,7 +15,7 @@ const dmsans = DM_Sans({
 
 export const metadata = {
   title: "Coupon System",
-  description: "This is a coupon system for Event management",
+  description: "This is a coupon system for Event management and ticketing",
 };
 
 export default function RootLayout({ children }) {
