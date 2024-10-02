@@ -166,7 +166,7 @@ const AdminDashboard = () => {
         </h1>
       </div>
 
-      <div className="mb-4 border-b border-gray-200 dark:border-gray-700 overflow-x-auto overflow-y-hidden">
+      <div className="mb-4 border-b border-gray-200  overflow-x-auto overflow-y-hidden">
         <ul
           className="flex flex-nowrap -mb-px text-sm font-medium text-center"
           role="tablist"
@@ -200,22 +200,22 @@ const AdminDashboard = () => {
 
       <div id="default-tab-content">
         {activeTab === "profile" && (
-          <div className="p-4 rounded-lg md:h-[60vh] w-full bg-gray-50 dark:bg-gray-800">
+          <div className="p-4 rounded-lg md:h-[60vh] w-full bg-gray-50">
             {memoizedDoughnutChart}
           </div>
         )}
         {activeTab === "dashboard" && (
-          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50 dark:bg-gray-800">
+          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50">
             {memoizedBarChart}
           </div>
         )}
         {activeTab === "settings" && (
-          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50 dark:bg-gray-800">
+          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50">
             {memoizedLineChart}
           </div>
         )}
         {activeTab === "contacts" && (
-          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50 dark:bg-gray-800">
+          <div className="p-4 rounded-lg md:h-[60vh] bg-gray-50">
             {memoizedWeekdayBarChart}
           </div>
         )}
