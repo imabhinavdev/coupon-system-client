@@ -48,7 +48,11 @@ const AdminUsersPage = () => {
   };
 
   if (loading) {
-    return <p className="text-center text-lg">Loading...</p>;
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <LoadingIcon className="w-6 h-6" />
+      </div>
+    );
   }
 
   return (
