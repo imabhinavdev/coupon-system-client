@@ -104,7 +104,11 @@ const AdminDashboard = () => {
   );
 
   if (loading) {
-    return <p>Loading dashboard...</p>;
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <LoadingIcon className="w-6 h-6" />
+      </div>
+    );
   }
 
   const handleGenerateReport = async () => {
