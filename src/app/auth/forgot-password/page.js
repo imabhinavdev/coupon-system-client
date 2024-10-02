@@ -107,7 +107,7 @@ const ForgotPasswordPage = () => {
                   disabled={loading}
                   className={`w-full disabled:bg-indigo-300 flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
                 >
-                  "Send OTP"
+                  Send OTP
                   {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
@@ -153,7 +153,7 @@ const ForgotPasswordPage = () => {
                   type="submit"
                   className={`w-full disabled:bg-indigo-300 flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
                 >
-                  "Reset Password"
+                  Reset Password
                   {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
