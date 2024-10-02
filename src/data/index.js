@@ -67,4 +67,5 @@ export const backendApi = {
   forgot_password_email: `${backendUrl}/auth/forgot-password/`,
   reset_password: `${backendUrl}/auth/reset-password/`,
   assign_coupon: `${backendUrl}/coupon/assign-coupon/`,
+  generate_report: `${backendUrl}/transactions/generate-report/`,
 };

@@ -1,7 +1,10 @@
 "use client";
 import { backendApi } from "@/data";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { SiteLinks } from "@/data";
+import { motion } from "framer-motion";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -63,32 +66,36 @@ const AdminUsersPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
         {filteredUsers.map((user) => (
-          <div
-            key={user._id}
-            className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
-          >
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              {user.name}
-            </h2>
-            <p className="text-gray-600">
-              <span className="font-semibold">Email:</span> {user.email}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">Phone:</span> {user.phone}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">Enrollment:</span>{" "}
-              {user.Enrollment}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">Active:</span>{" "}
-              {user.is_active ? "Yes" : "No"}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">Verified:</span>{" "}
-              {user.is_verified ? "Yes" : "No"}
-            </p>
-          </div>
+          <Link href={`${SiteLinks.manage_single_user.link}/${user._id}`}>
+            <motion.div
+              key={user._id}
+              className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+                {user.name}
+              </h2>
+              <p className="text-gray-600">
+                <span className="font-semibold">Email:</span> {user.email}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Phone:</span> {user.phone}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Enrollment:</span>{" "}
+                {user.Enrollment}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Active:</span>{" "}
+                {user.is_active ? "Yes" : "No"}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Verified:</span>{" "}
+                {user.is_verified ? "Yes" : "No"}
+              </p>
+            </motion.div>
+          </Link>
         ))}
       </div>
     </div>

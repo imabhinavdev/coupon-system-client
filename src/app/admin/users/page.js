@@ -15,9 +15,9 @@ const ManageUsersPage = () => {
 
   const userCardsData = [
     {
-      title: "Manage Student Users",
-      description: "View, edit, and manage all student users in the system.",
-      buttonLabel: "Manage Students",
+      title: "Manage All Users",
+      description: "View, edit, and manage all student/faculty users in the system.",
+      buttonLabel: "Manage Users",
       buttonColor: "bg-blue-500",
       link: SiteLinks.admin_all_users.link,
     },

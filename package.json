@@ -11,6 +11,7 @@
   "dependencies": {
     "chart.js": "^4.4.4",
     "flowbite-react": "^0.10.1",
+    "framer-motion": "^11.9.0",
     "html5-qrcode": "^2.3.8",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
