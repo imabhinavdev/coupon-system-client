@@ -160,7 +160,7 @@ export const LogoutIcon = ({ className }) => (
   </svg>
 );
 
-export const LoadingIcon = ({ className, color = "#000" }) => (
+export const LoadingIcon = ({ className = "", color = "#000" }) => (
   <svg
     version="1.1"
     id="L7"
@@ -171,7 +171,8 @@ export const LoadingIcon = ({ className, color = "#000" }) => (
     viewBox="0 0 100 100"
     enableBackground="new 0 0 100 100"
     xmlSpace="preserve"
-    className={`w-5 h-5 ${className}`}
+    // className={`${className}`}
+    className={className}
   >
     <path
       fill={color}

@@ -105,13 +105,10 @@ const ForgotPasswordPage = () => {
                 <button
                   type="password"
                   disabled={loading}
-                  className={`w-full flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
+                  className={`w-full disabled:bg-indigo-300 flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
                 >
-                  {loading ? (
-                    <LoadingIcon color="#fff" className="w-6 h-6" />
-                  ) : (
-                    "Send OTP"
-                  )}
+                  "Send OTP"
+                  {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
             </>
@@ -154,13 +151,10 @@ const ForgotPasswordPage = () => {
 
                 <button
                   type="submit"
-                  className={`w-full flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
+                  className={`w-full disabled:bg-indigo-300 flex justify-center items-center px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 `}
                 >
-                  {loading ? (
-                    <LoadingIcon color="#fff" className="w-6 h-6" />
-                  ) : (
-                    "Reset Password"
-                  )}
+                  "Reset Password"
+                  {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
             </>

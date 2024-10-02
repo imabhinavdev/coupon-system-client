@@ -1,7 +1,8 @@
 "use client";
 import { useState, createContext, useEffect } from "react";
 import { backendApi } from "@/data";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { LoadingIcon } from "@/components/icons";
 
 export const UserContext = createContext();
 
@@ -29,9 +30,11 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const Loader = () => (
-    <div className="skeleton">
-      <Skeleton height="100%" containerClassName="flex-1 h-full" />
-    </div>
+    <>
+      <div className="flex w-full h-full justify-center items-center flex-grow min-h-full">
+          <LoadingIcon color="#000" className="w-6 h-6" />
+      </div>
+    </>
   );
 
   if (loading) {

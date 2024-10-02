@@ -142,18 +142,14 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
     <>
       <button
         className={`${
-          loading ? "bg-gray-200" : "bg-primary"
-        } text-secondary text-sm md:text-md rounded-lg px-4 py-2`}
+          loading ? "bg-gray-400" : "bg-primary"
+        } text-secondary text-sm md:text-md rounded-lg px-4 py-2 flex gap-2 items-center`}
         onClick={handlePayment}
+       
         disabled={loading}
       >
-        {loading ? (
-          <>
-            <LoadingIcon color="#000" />
-          </>
-        ) : (
-          label
-        )}
+        <span>{label}</span>
+        {loading && <LoadingIcon color="#fff" className="w-4 h-4" />}
       </button>
       {coupon && (
         <CouponModal

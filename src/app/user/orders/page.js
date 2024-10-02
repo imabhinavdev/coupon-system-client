@@ -85,9 +85,15 @@ const Orders = () => {
                     {order.couponCategoryId.name}
                   </h3>
                   <span className="text-sm text-gray-400">
-                    {formatDate(order.createdAt)} at {formatTime(order.createdAt)}
+                    {formatDate(order.createdAt)} at{" "}
+                    {formatTime(order.createdAt)}
                   </span>
-                  <p className="mt-2">₹{order.couponCategoryId.price}</p>
+                  <p className="mt-2 flex w-full justify-between flex-col md:dlex-row">
+                    <span>
+                      ₹{order.couponCategoryId.price * order.noOfPerson}
+                    </span>
+                    <span>No of Person: {order.noOfPerson}</span>
+                  </p>
                 </div>
                 <button
                   onClick={() =>
@@ -112,9 +118,12 @@ const Orders = () => {
         </div>
       ) : (
         <div className="text-center flex flex-col p-4 gap-4">
-          <h2 className="text-4xl font-bold text-primary mb-4">No Orders Yet</h2>
+          <h2 className="text-4xl font-bold text-primary mb-4">
+            No Orders Yet
+          </h2>
           <p className="text-xl text-primary">
-            Looks like you haven&apos;t placed any orders yet. Start shopping now!
+            Looks like you haven&apos;t placed any orders yet. Start shopping
+            now!
           </p>
           <Link
             href={SiteLinks.coupons.link}

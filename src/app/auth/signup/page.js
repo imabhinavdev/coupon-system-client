@@ -280,13 +280,10 @@ const Signup = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                  className="w-full disabled:bg-indigo-300 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                 >
-                  {loading ? (
-                    <LoadingIcon color="#fff" className="h-5 w-5 animate-spin mx-auto" />
-                  ) : (
-                    "Create account"
-                  )}
+                  "Create account"
+                  {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
             </div>
@@ -315,13 +312,10 @@ const Signup = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                  className="w-full disabled:bg-indigo-300 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                 >
-                  {loading ? (
-                    <LoadingIcon className="h-5 w-5 animate-spin mx-auto" />
-                  ) : (
-                    "Verify OTP"
-                  )}
+                  "Verify OTP"
+                  {loading && <LoadingIcon color="#fff" className="w-6 h-6" />}
                 </button>
               </form>
             </div>

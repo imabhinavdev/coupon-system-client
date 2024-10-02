@@ -203,7 +203,7 @@ const ManageUserData = () => {
                       <th className="p-2 border">Day</th>
                       <th className="p-2 border">Time</th>
                       <th className="p-2 border">Amount</th>
-                      <th className="p-2 border">is Captured?</th>
+                      <th className="p-2 border">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -225,13 +225,13 @@ const ManageUserData = () => {
                           ₹ {transaction.amount}
                         </td>
                         <td
-                          className={`p-2 border text-center ${
-                            transaction.isCaptured
+                          className={`p-2 capitalize border text-center ${
+                            transaction.status === "success"
                               ? "text-green-500"
                               : "text-red-500"
                           } `}
                         >
-                          {transaction.isCaptured ? "Yes" : "No"}
+                          {transaction.status}
                         </td>
                       </tr>
                     ))}

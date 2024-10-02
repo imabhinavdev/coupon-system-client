@@ -114,15 +114,14 @@ const HistoryPage = () => {
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Purchasing Time
                     </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Scanned Date
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Scanned Time
-                    </th>
+
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Price
                     </th>
+                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
+                      Purchasing Mode
+                    </th>
+
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Status
                     </th>
@@ -134,34 +133,32 @@ const HistoryPage = () => {
                       key={transaction.id}
                       className="border-b border-gray-300"
                     >
-                      <td className="py-3 px-4 text-secondary">{idx + 1}</td>
-                      <td className="py-3 px-4 text-secondary">
+                      <td className="text-left py-3 px-4 text-secondary">{idx + 1}</td>
+                      <td className="text-left py-3 px-4 text-secondary">
                         {transaction.couponCategoryId.name}
                       </td>
-                      <td className="py-3 px-4 text-secondary">
+                      <td className="text-left py-3 px-4 text-secondary">
                         {formatDate(transaction.createdAt)}
                       </td>
-                      <td className="py-3 px-4 text-secondary">
+                      <td className="text-left py-3 px-4 text-secondary">
                         {formatTime(transaction.createdAt)}
                       </td>
-                      <td className="py-3 px-4 text-secondary">
-                        {formatDate(transaction.updatedAt)}
+
+                      <td className="text-left py-3 px-4 text-secondary">
+                        ₹{transaction.amount}
                       </td>
-                      <td className="py-3 px-4 text-secondary">
-                        {formatTime(transaction.updatedAt)}
+                      <td className="text-left py-3 px-4 capitalize text-secondary">
+                        {transaction.paymentMode}
                       </td>
-                      <td className="py-3 px-4 text-secondary">
-                        ₹{transaction.couponCategoryId.price}
-                      </td>
-                      <td className="py-3 px-4">
+                      <td className="text-left py-3 px-4">
                         <span
-                          className={`font-semibold ${
-                            transaction.isCaptured
+                          className={`capitalize font-semibold ${
+                            transaction.status === "success"
                               ? "text-green-500"
                               : "text-red-500"
                           }`}
                         >
-                          {transaction.isCaptured ? "Success" : "Failed"}
+                          {transaction.status}
                         </span>
                       </td>
                     </tr>
