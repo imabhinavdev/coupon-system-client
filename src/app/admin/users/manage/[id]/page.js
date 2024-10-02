@@ -51,7 +51,11 @@ const ManageUserData = () => {
   };
 
   if (!data) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <LoadingIcon className="w-6 h-6" />
+      </div>
+    );
   }
 
   return (
