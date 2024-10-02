@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [userType, setUserType] = useState("student");
+  const [userType, setUserType] = useState("user");
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState(null);
@@ -198,7 +198,7 @@ const Signup = () => {
                   </div>
                 </div>
 
-                {userType === "student" && (
+                {userType === "user" && (
                   <div>
                     <label className="font-medium">Enrollment</label>
                     <input

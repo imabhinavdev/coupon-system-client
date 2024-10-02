@@ -1,5 +1,5 @@
 "use client";
-import { EyeCloseIcon, EyeOpenIcon, GoogleIcon } from "@/components/icons";
+import { EyeCloseIcon, EyeOpenIcon, GoogleIcon, LoadingIcon } from "@/components/icons";
 import SiteIcon from "@/components/site-title";
 import { SiteLinks } from "@/data";
 import React, { useState, useRef } from "react";
@@ -10,6 +10,7 @@ import { backendApi } from "@/data";
 const LoginPage = () => {
   const [showEmail, setShowEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -36,6 +37,7 @@ const LoginPage = () => {
       const data = await res.json();
       if (res.ok) {
         toast.success("Logged in successfully");
+        setLoading(false);
         console.log(data);
         window.location.reload();
       } else {
@@ -116,8 +118,17 @@ const LoginPage = () => {
             <button
               type="password"
               className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                onClick={()=>setLoading(true)}
             >
-              Sign in
+              {
+                loading ? (
+                  <div className="flex justify-center">
+                    <LoadingIcon className="w-6 h-6" color="#FFF"/>
+                  </div>
+                ) : (
+                  "Log in"
+                )
+              }
             </button>
           </form>
         </div>
