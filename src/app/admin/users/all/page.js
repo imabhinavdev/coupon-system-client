@@ -66,9 +66,11 @@ const AdminUsersPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
         {filteredUsers.map((user) => (
-          <Link href={`${SiteLinks.manage_single_user.link}/${user._id}`}>
+          <Link
+            key={user._id}
+            href={`${SiteLinks.manage_single_user.link}/${user._id}`}
+          >
             <motion.div
-              key={user._id}
               className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
