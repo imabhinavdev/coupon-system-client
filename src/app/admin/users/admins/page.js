@@ -2,7 +2,7 @@
 import { backendApi } from "@/data";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { LoadingIcon } from "@/components/icons";
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);

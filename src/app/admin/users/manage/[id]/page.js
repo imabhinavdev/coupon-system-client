@@ -9,6 +9,7 @@ import EditUserModal from "@/components/edit-user-modal";
 import { formatDate } from "@/utils/FormatDate";
 import { formatTime } from "@/utils/FormatTime";
 import AssignCouponModal from "@/components/assign-coupon-modal";
+import { LoadingIcon } from "@/components/icons";
 
 const ManageUserData = () => {
   const { id } = useParams();
