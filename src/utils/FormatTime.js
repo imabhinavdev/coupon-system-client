@@ -13,4 +13,4 @@ export const formatTime = (timestamp) => {
   const formattedMinutes = minutes.toString().padStart(2, "0");
 
   return `${formattedHours}:${formattedMinutes} ${ampm}`;
-}
+};

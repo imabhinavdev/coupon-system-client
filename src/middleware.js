@@ -27,8 +27,7 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  if (path.startsWith("/user")) {;
-    console.log(!(role === "admin"));
+  if (path.startsWith("/user")) {
     if (token && decodedToken && !(role === "staff") && !(role === "admin")) {
       return NextResponse.next();
     } else if (role === "admin") {

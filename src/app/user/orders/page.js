@@ -29,12 +29,12 @@ const Orders = () => {
           `${backendApi.coupons}?user_id=${user._id}&is_used=false`,
           {
             method: "GET",
-          }
+          },
         );
         const data = await response.json();
         if (response.ok) {
           const sortedOrders = data.coupons.sort(
-            (a, b) => new Date(b.created_at) - new Date(a.created_at) // Sort in descending order
+            (a, b) => new Date(b.created_at) - new Date(a.created_at), // Sort in descending order
           );
           setOrders(sortedOrders);
         }
@@ -69,7 +69,7 @@ const Orders = () => {
             ))}
           </div>
         </div>
-      ) : orders.length > 0 ? (
+      ) : orders?.length > 0 ? ( // Optional chaining for orders
         <div className="w-full mx-auto p-4">
           <h2 className="text-3xl font-bold text-primary mb-6 text-center">
             Your Orders
@@ -77,33 +77,39 @@ const Orders = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {orders.map((order) => (
               <div
-                key={order.id}
+                key={order?._id ?? order?.id ?? index} // Use fallback for key
                 className="bg-primary text-secondary px-6 py-2 rounded-xl shadow-lg flex justify-between items-center"
               >
                 <div>
                   <h3 className="md:text-xl text-md font-semibold">
-                    {order.couponCategoryId.name}
+                    {order?.couponCategoryId?.name ?? "Unknown Coupon"}{" "}
+                    {/* Optional chaining and fallback */}
                   </h3>
                   <span className="text-sm text-gray-400">
-                    {formatDate(order.createdAt)} at{" "}
-                    {formatTime(order.createdAt)}
+                    {formatDate(order?.createdAt) ?? "N/A"} at{" "}
+                    {formatTime(order?.createdAt) ?? "N/A"}{" "}
+                    {/* Optional chaining */}
                   </span>
-                  <p className="mt-2 flex w-full justify-between flex-col md:dlex-row">
+                  <p className="mt-2 flex w-full justify-between flex-col md:flex-row">
                     <span>
-                      ₹{order.couponCategoryId.price * order.noOfPerson}
+                      ₹
+                      {(order?.couponCategoryId?.price ?? 0) *
+                        (order?.noOfPerson ?? 0)}{" "}
+                      {/* Optional chaining and fallback */}
                     </span>
-                    <span>No of Person: {order.noOfPerson}</span>
+                    <span>No of Persons: {order?.noOfPerson ?? 0}</span>{" "}
+                    {/* Optional chaining */}
                   </p>
                 </div>
                 <button
                   onClick={() =>
                     handleModal({
-                      id: order._id,
-                      userId: order.userId,
-                      couponCategoryId: order.couponCategoryId._id,
+                      id: order?._id,
+                      userId: order?.userId,
+                      couponCategoryId: order?.couponCategoryId?._id,
                     })
                   }
-                  className="bg-secondary text-primary md:px-4 md:py-2 p-2 text-sm md:text-md  rounded-lg"
+                  className="bg-secondary text-primary md:px-4 md:py-2 p-2 text-sm md:text-md rounded-lg"
                 >
                   View QR
                 </button>

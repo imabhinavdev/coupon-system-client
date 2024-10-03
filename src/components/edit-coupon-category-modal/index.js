@@ -18,7 +18,7 @@ const EditCouponCategoryModal = ({ onClose, category }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ name, price, isActive: isActive }),
-        }
+        },
       );
 
       if (response.ok) {

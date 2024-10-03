@@ -28,7 +28,6 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
     const noOfPerson = noOfPersonRef.current.value;
     const couponCategoryId = couponCategoryIdRef.current.value;
 
-    console.log(userId, noOfPerson, couponCategoryId);
     try {
       const response = await fetch(`${backendApi.assign_coupon}`, {
         method: "POST",

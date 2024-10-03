@@ -88,19 +88,19 @@ const AdminDashboard = () => {
 
   const memoizedDoughnutChart = useMemo(
     () => <DoughnutChart data={dashboardData.revenueByCategory} />,
-    [dashboardData.revenueByCategory]
+    [dashboardData.revenueByCategory],
   );
   const memoizedBarChart = useMemo(
     () => <BarChart data={dashboardData.revenueByCategory} />,
-    [dashboardData.revenueByCategory]
+    [dashboardData.revenueByCategory],
   );
   const memoizedLineChart = useMemo(
     () => <LineChart data={dashboardData.revenueOverTime} />,
-    [dashboardData.revenueOverTime]
+    [dashboardData.revenueOverTime],
   );
   const memoizedWeekdayBarChart = useMemo(
     () => <WeekdayBarChart data={dashboardData.couponStatsByWeekday} />,
-    [dashboardData.couponStatsByWeekday]
+    [dashboardData.couponStatsByWeekday],
   );
 
   if (loading) {
@@ -161,7 +161,7 @@ const AdminDashboard = () => {
         <h1 className="text-2xl font-semibold mb-4">
           Total Revenue:{" "}
           <span className="text-blue-700 p-2 font-black text-3xl md:text-5xl rounded-lg shadow-md border border-gray-100">
-            ₹ {dashboardData.totalRevenue}
+            ₹ {dashboardData?.totalRevenue}
           </span>
         </h1>
       </div>
@@ -269,7 +269,7 @@ const DoughnutChart = ({ data, label = "Revenue Distribution" }) => {
 const BarChart = ({ data, label = "Revenue Comparison" }) => {
   const backgroundColors = data.map(() => generateRandomColor());
   const borderColors = backgroundColors.map((color) =>
-    color.replace("0.2", "1")
+    color.replace("0.2", "1"),
   );
 
   return (
@@ -314,7 +314,7 @@ const LineChart = ({ data, label = "Revenue Over Time" }) => {
       <Line
         data={{
           labels: sortedData.map((item) =>
-            new Date(item.date).toLocaleDateString()
+            new Date(item.date).toLocaleDateString(),
           ),
           datasets: [
             {
@@ -341,7 +341,7 @@ const LineChart = ({ data, label = "Revenue Over Time" }) => {
 const WeekdayBarChart = ({ data, label = "Coupons Sold by Day" }) => {
   const backgroundColors = data.map(() => generateRandomColor());
   const borderColors = backgroundColors.map((color) =>
-    color.replace("0.2", "1")
+    color.replace("0.2", "1"),
   );
 
   return (

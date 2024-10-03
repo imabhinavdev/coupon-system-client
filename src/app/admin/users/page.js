@@ -15,8 +15,9 @@ const ManageUsersPage = () => {
 
   const userCardsData = [
     {
-      title: "Manage All Users",
-      description: "View, edit, and manage all student/faculty users in the system.",
+      title: "Manage Student/Faculty Users",
+      description:
+        "View, edit, and manage all student/faculty users in the system.",
       buttonLabel: "Manage Users",
       buttonColor: "bg-blue-500",
       link: SiteLinks.admin_all_users.link,
@@ -56,7 +57,7 @@ const ManageUsersPage = () => {
         setIsSearching(false); // Stop loading
       }
     }, 500), // 500ms delay for debouncing
-    []
+    [],
   );
 
   // Update search term and trigger debounced search
@@ -131,15 +132,11 @@ const ManageUsersPage = () => {
                     key={index}
                     href={`${SiteLinks.manage_single_user.link}/${user._id}`}
                     className="flex items-center justify-between px-4 py-2 hover:bg-gray-100 cursor-pointer transition ease-in-out duration-200"
-                    // Handle user selection
                   >
                     <div>
                       <p className="font-medium text-blue-500">{user.name}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
-                    {/* <span className="text-gray-500">
-                    <ThreeDotsIcon />
-                    </span> */}
                   </Link>
                 ))}
               </div>

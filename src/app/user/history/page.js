@@ -29,7 +29,7 @@ const HistoryPage = () => {
           `${backendApi.history}?user_id=${user._id}`,
           {
             method: "GET",
-          }
+          },
         );
         const data = await response.json();
         if (response.ok) {
@@ -92,7 +92,7 @@ const HistoryPage = () => {
             </div>
           </div>
         </div>
-      ) : transactions.length > 0 ? (
+      ) : transactions?.length > 0 ? ( // Optional chaining here
         <div className="flex-grow h-full flex items-start justify-center rounded-xl">
           <div className="w-full">
             <h2 className="text-3xl font-bold text-secondary mb-6 text-left">
@@ -114,14 +114,12 @@ const HistoryPage = () => {
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Purchasing Time
                     </th>
-
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Price
                     </th>
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Purchasing Mode
                     </th>
-
                     <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
                       Status
                     </th>
@@ -130,35 +128,42 @@ const HistoryPage = () => {
                 <tbody>
                   {transactions.map((transaction, idx) => (
                     <tr
-                      key={transaction.id}
+                      key={transaction?.id ?? idx} // Fallback to index if id is missing
                       className="border-b border-gray-300"
                     >
-                      <td className="text-left py-3 px-4 text-secondary">{idx + 1}</td>
                       <td className="text-left py-3 px-4 text-secondary">
-                        {transaction.couponCategoryId.name}
+                        {idx + 1}
                       </td>
                       <td className="text-left py-3 px-4 text-secondary">
-                        {formatDate(transaction.createdAt)}
+                        {transaction?.couponCategoryId?.name ?? "N/A"}{" "}
+                        {/* Optional chaining and fallback */}
                       </td>
                       <td className="text-left py-3 px-4 text-secondary">
-                        {formatTime(transaction.createdAt)}
+                        {formatDate(transaction?.createdAt) ?? "N/A"}{" "}
+                        {/* Optional chaining */}
                       </td>
-
                       <td className="text-left py-3 px-4 text-secondary">
-                        ₹{transaction.amount}
+                        {formatTime(transaction?.createdAt) ?? "N/A"}{" "}
+                        {/* Optional chaining */}
+                      </td>
+                      <td className="text-left py-3 px-4 text-secondary">
+                        ₹{transaction?.amount ?? "N/A"}{" "}
+                        {/* Optional chaining */}
                       </td>
                       <td className="text-left py-3 px-4 capitalize text-secondary">
-                        {transaction.paymentMode}
+                        {transaction?.paymentMode ?? "N/A"}{" "}
+                        {/* Optional chaining */}
                       </td>
                       <td className="text-left py-3 px-4">
                         <span
                           className={`capitalize font-semibold ${
-                            transaction.status === "success"
+                            transaction?.status === "success"
                               ? "text-green-500"
                               : "text-red-500"
                           }`}
                         >
-                          {transaction.status}
+                          {transaction?.status ?? "N/A"}{" "}
+                          {/* Optional chaining */}
                         </span>
                       </td>
                     </tr>

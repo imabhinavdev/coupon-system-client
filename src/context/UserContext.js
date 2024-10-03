@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
   const Loader = () => (
     <>
       <div className="flex w-full h-full justify-center items-center flex-grow min-h-full">
-          <LoadingIcon color="#000" className="w-6 h-6" />
+        <LoadingIcon color="#000" className="w-6 h-6" />
       </div>
     </>
   );

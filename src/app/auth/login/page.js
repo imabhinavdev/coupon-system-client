@@ -1,5 +1,10 @@
 "use client";
-import { EyeCloseIcon, EyeOpenIcon, GoogleIcon, LoadingIcon } from "@/components/icons";
+import {
+  EyeCloseIcon,
+  EyeOpenIcon,
+  GoogleIcon,
+  LoadingIcon,
+} from "@/components/icons";
 import SiteIcon from "@/components/site-title";
 import { SiteLinks } from "@/data";
 import React, { useState, useRef } from "react";
@@ -38,13 +43,11 @@ const LoginPage = () => {
       if (res.ok) {
         toast.success("Logged in successfully");
         setLoading(false);
-        console.log(data);
         window.location.reload();
       } else {
         toast.error(data.error || "An error occurred. Please try again");
       }
     } catch (error) {
-      console.log(error);
       toast.error("An error occurred. Please try again");
     }
   };
@@ -118,17 +121,15 @@ const LoginPage = () => {
             <button
               type="password"
               className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
-                onClick={()=>setLoading(true)}
+              onClick={() => setLoading(true)}
             >
-              {
-                loading ? (
-                  <div className="flex justify-center">
-                    <LoadingIcon className="w-6 h-6" color="#FFF"/>
-                  </div>
-                ) : (
-                  "Log in"
-                )
-              }
+              {loading ? (
+                <div className="flex justify-center">
+                  <LoadingIcon className="w-6 h-6" color="#FFF" />
+                </div>
+              ) : (
+                "Log in"
+              )}
             </button>
           </form>
         </div>

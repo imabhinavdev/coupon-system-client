@@ -27,7 +27,6 @@ const AddCouponCategoryModal = ({ onClose }) => {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error);
       toast.error("Failed to add coupon category.");
     }
   };

@@ -95,7 +95,6 @@ const Signup = () => {
           toast.error(data.error || "An error occurred. Please try again");
         }
       } catch (error) {
-        console.log(error);
         toast.error("An error occurred. Please try again");
       }
     };
@@ -129,7 +128,6 @@ const Signup = () => {
           toast.error(data.error || "An error occurred. Please try again");
         }
       } catch (error) {
-        console.log(error);
         toast.error("An error occurred. Please try again");
       }
     };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CrossIcon } from "@/components/icons"; 
+import { CrossIcon } from "@/components/icons";
 import GenerateQR from "@/components/qrcode-generate";
 
 const CouponModal = ({ isOpen = true, user = "", onClose, coupon }) => {
