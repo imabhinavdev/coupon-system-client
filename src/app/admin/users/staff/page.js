@@ -18,7 +18,6 @@ const AdminUsersPage = () => {
         });
         const data = await response.json();
         if (response.ok) {
-          console.log(data.users);
           setUsers(data.users);
           setFilteredUsers(data.users); // Initialize filtered users with all users
         }
@@ -40,7 +39,7 @@ const AdminUsersPage = () => {
       (user) =>
         user.name.toLowerCase().includes(query) ||
         user.email.toLowerCase().includes(query) ||
-        user.phone.includes(query)
+        user.phone.includes(query),
     );
     setFilteredUsers(filtered);
   };
@@ -67,32 +66,38 @@ const AdminUsersPage = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-        {filteredUsers.map((user) => (
-          <div
-            key={user._id}
-            className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
-          >
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              {user.name}
-            </h2>
-            <p className="text-gray-600">
-              <span className="font-semibold">Email:</span> {user.email}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">Phone:</span> {user.phone}
-            </p>
-
-            <p className="text-gray-600">
-              <span className="font-semibold">Active:</span>{" "}
-              {user.is_active ? "Yes" : "No"}
-            </p>
-
-            <p className="text-gray-600">
-              <span className="font-semibold">Verified:</span>{" "}
-              {user.is_verified ? "Yes" : "No"}
-            </p>
+        {filteredUsers?.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div
+              key={user?._id ?? "unknown"}
+              className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
+            >
+              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+                {user?.name ?? "N/A"}
+              </h2>
+              <p className="text-gray-600">
+                <span className="font-semibold">Email:</span>{" "}
+                {user?.email ?? "N/A"}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Phone:</span>{" "}
+                {user?.phone ?? "N/A"}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Active:</span>{" "}
+                {user?.is_active ? "Yes" : "No"}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">Verified:</span>{" "}
+                {user?.is_verified ? "Yes" : "No"}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="col-span-full text-center text-gray-600">
+            No staff members found.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

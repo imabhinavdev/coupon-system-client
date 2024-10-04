@@ -69,7 +69,7 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
               response.razorpay_signature,
               transactionId,
               response.razorpay_payment_id,
-              response.razorpay_order_id
+              response.razorpay_order_id,
             );
           },
           prefill: {
@@ -100,7 +100,7 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
     razorpay_signature,
     transaction_id,
     razorpay_payment_id,
-    razorpay_order_id
+    razorpay_order_id,
   ) => {
     setQrLoading(true);
     const dataToSend = {
@@ -145,7 +145,6 @@ const PaymentComponent = ({ coupon_category, label = "Pay Now" }) => {
           loading ? "bg-gray-400" : "bg-primary"
         } text-secondary text-sm md:text-md rounded-lg px-4 py-2 flex gap-2 items-center`}
         onClick={handlePayment}
-       
         disabled={loading}
       >
         <span>{label}</span>

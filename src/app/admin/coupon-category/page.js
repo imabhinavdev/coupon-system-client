@@ -25,15 +25,14 @@ const AdminCouponCategoryDashboard = () => {
           throw new Error(data);
         }
       } catch (error) {
-        console.log(error);
         toast.error("Failed to fetch coupon categories.");
       }
     };
     fetchCouponCategory();
-  }, [isEditModalOpen,isModalOpen]);
+  }, [isEditModalOpen, isModalOpen]);
 
   const filteredCategories = couponCategory.filter((category) =>
-    category.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    category.name?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleDelete = async (id) => {
@@ -43,14 +42,13 @@ const AdminCouponCategoryDashboard = () => {
       });
       if (response.ok) {
         setCouponCategory((prev) =>
-          prev.filter((category) => category.id !== id)
+          prev.filter((category) => category._id !== id),
         ); // Remove deleted category from state
         toast.error("Coupon category deleted successfully.");
       } else {
         throw new Error("Failed to delete coupon category.");
       }
     } catch (error) {
-      console.log(error);
       toast.error("Failed to delete coupon category.");
     }
   };
@@ -70,11 +68,11 @@ const AdminCouponCategoryDashboard = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedCategory),
-        }
+        },
       );
       if (response.ok) {
         const updatedCategories = couponCategory.map((cat) =>
-          cat.id === updatedCategory.id ? updatedCategory : cat
+          cat.id === updatedCategory.id ? updatedCategory : cat,
         );
         setCouponCategory(updatedCategories); // Update state with the edited category
         toast.success("Coupon category updated successfully.");
@@ -82,7 +80,6 @@ const AdminCouponCategoryDashboard = () => {
         throw new Error("Failed to update coupon category.");
       }
     } catch (error) {
-      console.log(error);
       toast.error("Failed to update coupon category.");
     } finally {
       setIsEditModalOpen(false); // Close the modal after editing
@@ -124,7 +121,7 @@ const AdminCouponCategoryDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCategories.map((category) => (
           <div
-            key={category.id}
+            key={category._id}
             className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
           >
             <div className="flex justify-between">
@@ -135,7 +132,7 @@ const AdminCouponCategoryDashboard = () => {
                 onDelete={() => handleDelete(category._id)}
                 category={category.name}
                 onEdit={() => handleEdit(category)} // Pass category for editing
-                onToggleActive={() => handleToggleActive(category.id)}
+                onToggleActive={() => handleToggleActive(category._id)}
               />
             </div>
 

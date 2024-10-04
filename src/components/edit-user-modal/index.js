@@ -28,7 +28,7 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
       if (response.ok) {
         onUpdate(); // Refresh the user details

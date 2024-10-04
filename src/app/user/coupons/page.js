@@ -47,15 +47,16 @@ const Coupons = () => {
             <Skeleton height={40} width={80} className="mt-4 md:mt-0" />
           </div>
         ))
-      ) : couponCategory.length > 0 ? (
+      ) : couponCategory?.length > 0 ? ( // Added optional chaining here
         couponCategory.map((coupon) => (
           <div
             className="bg-secondary flex justify-between items-center text-primary rounded-xl px-4 py-6 md:px-12 md:py-4"
-            key={coupon.id}
+            key={coupon?.id ?? "unknown"} // Fallback key
           >
             <div>
-              <h3 className="md:text-2xl text-md">{coupon.name}</h3>
-              <p>₹{coupon.price}</p>
+              <h3 className="md:text-2xl text-md">{coupon?.name ?? "N/A"}</h3>{" "}
+              {/* Fallback name */}
+              <p>₹{coupon?.price ?? "N/A"}</p> {/* Fallback price */}
             </div>
             <PaymentComponent coupon_category={coupon} />
           </div>

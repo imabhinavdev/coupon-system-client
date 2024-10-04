@@ -41,7 +41,6 @@ const ForgotPasswordPage = () => {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error);
       toast.error("Failed to send OTP.");
     } finally {
       setLoading(false);
@@ -70,7 +69,6 @@ const ForgotPasswordPage = () => {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error);
       toast.error("Failed to reset password.");
     } finally {
       setLoading(false);

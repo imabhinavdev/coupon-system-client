@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { backendApi } from "@/data";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { EditIcon, ThreeDotsIcon } from "@/components/icons";
 import DropdownMenu from "@/components/context-drop-menu";
 import EditUserModal from "@/components/edit-user-modal";
 import { formatDate } from "@/utils/FormatDate";
@@ -63,7 +62,7 @@ const ManageUserData = () => {
     <div className="">
       {/* User Info Card */}
       <div className="bg-white shadow-md rounded-lg p-4 md:p-6 mb-8">
-        <h2 className="text-xl md:text-2xl font-semibold mb-4 flex  md:flex-row justify-between items-center">
+        <h2 className="text-xl md:text-2xl font-semibold mb-4 flex md:flex-row justify-between items-center">
           User Information
           <span>
             <DropdownMenu
@@ -78,18 +77,18 @@ const ManageUserData = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div>
             <p>
-              <strong>Name:</strong> {data.user.name}
+              <strong>Name:</strong> {data?.user?.name ?? "N/A"}
             </p>
             <p>
-              <strong>Email:</strong> {data.user.email}
+              <strong>Email:</strong> {data?.user?.email ?? "N/A"}
             </p>
           </div>
           <div>
             <p>
-              <strong>Phone:</strong> {data.user.phone}
+              <strong>Phone:</strong> {data?.user?.phone ?? "N/A"}
             </p>
             <p>
-              <strong>Enrollment:</strong> {data.user.enrollment}
+              <strong>Enrollment:</strong> {data?.user?.enrollment ?? "N/A"}
             </p>
           </div>
         </div>
@@ -97,17 +96,17 @@ const ManageUserData = () => {
           <div>
             <p>
               <strong>Account Created:</strong>{" "}
-              {formatDate(data.user.createdAt)}
+              {formatDate(data?.user?.createdAt ?? null)}
             </p>
             <p>
               <strong>Is Verified:</strong>{" "}
-              {data.user.isVerified ? "Yes" : "No"}
+              {data?.user?.isVerified ? "Yes" : "No"}
             </p>
           </div>
           <div>
             <p>
               <strong>Role:</strong>
-              <span className="capitalize"> {data.user.role}</span>
+              <span className="capitalize"> {data?.user?.role ?? "N/A"}</span>
             </p>
           </div>
         </div>
@@ -117,14 +116,14 @@ const ManageUserData = () => {
       <EditUserModal
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
-        userData={data.user}
+        userData={data?.user ?? {}}
         onUpdate={refreshUserData}
       />
 
       <AssignCouponModal
         isOpen={isAssignCouponModalOpen}
         onClose={closeAssignCouponModal}
-        userId={id}
+        userId={id ?? null}
       />
 
       {/* Tabs for Orders and Transactions */}
@@ -168,27 +167,33 @@ const ManageUserData = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.orders.map((order, index) => (
+                    {data?.orders?.map((order, index) => (
                       <tr key={index}>
-                        <td className="p-2 border text-center">{order._id}</td>
                         <td className="p-2 border text-center">
-                          {order.couponCategoryId.name}
+                          {order?._id ?? "N/A"}
                         </td>
                         <td className="p-2 border text-center">
-                          {formatDate(order.createdAt)}
+                          {order?.couponCategoryId?.name ?? "N/A"}
+                        </td>
+                        <td className="p-2 border text-center">
+                          {formatDate(order?.createdAt ?? null)}
                         </td>
                         <td
                           className={`p-2 border text-center ${
-                            order.isUsed ? "text-green-500" : "text-red-500"
-                          } `}
+                            order?.isUsed ? "text-green-500" : "text-red-500"
+                          }`}
                         >
-                          {order.isUsed ? "Yes" : "No"}
+                          {order?.isUsed ? "Yes" : "No"}
                         </td>
                         <td className="p-2 border text-center">
-                          {order.scannedBy ? order.scannedBy.name : "-"}
+                          {order?.scannedBy?.name ?? "-"}
                         </td>
                       </tr>
-                    ))}
+                    )) ?? (
+                      <tr>
+                        <td colSpan="5">No orders found.</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -212,34 +217,38 @@ const ManageUserData = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.transactions.map((transaction, index) => (
+                    {data?.transactions?.map((transaction, index) => (
                       <tr key={index}>
                         <td className="p-2 border text-center">
-                          {transaction._id}
+                          {transaction?._id ?? "N/A"}
                         </td>
                         <td className="p-2 border text-center">
-                          {transaction.couponCategoryId.name}
+                          {transaction?.couponCategoryId?.name ?? "N/A"}
                         </td>
                         <td className="p-2 border text-center min-w-fit text-nowrap">
-                          {formatDate(transaction.createdAt)}
+                          {formatDate(transaction?.createdAt ?? null)}
                         </td>
                         <td className="p-2 border text-center min-w-fit text-nowrap">
-                          {formatTime(transaction.createdAt)}
+                          {formatTime(transaction?.createdAt ?? null)}
                         </td>
                         <td className="p-2 border text-center">
-                          ₹ {transaction.amount}
+                          ₹ {transaction?.amount ?? 0}
                         </td>
                         <td
                           className={`p-2 capitalize border text-center ${
-                            transaction.status === "success"
+                            transaction?.status === "success"
                               ? "text-green-500"
                               : "text-red-500"
-                          } `}
+                          }`}
                         >
-                          {transaction.status}
+                          {transaction?.status ?? "Unknown"}
                         </td>
                       </tr>
-                    ))}
+                    )) ?? (
+                      <tr>
+                        <td colSpan="6">No transactions found.</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

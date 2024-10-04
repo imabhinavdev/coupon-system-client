@@ -21,7 +21,6 @@ const AdminUsersPage = () => {
         });
         const data = await response.json();
         if (response.ok) {
-          console.log(data.users);
           setUsers(data.users);
           setFilteredUsers(data.users); // Initialize filtered users with all users
         }
@@ -43,7 +42,7 @@ const AdminUsersPage = () => {
       (user) =>
         user.name.toLowerCase().includes(query) ||
         user.email.toLowerCase().includes(query) ||
-        user.phone.includes(query)
+        user.phone.includes(query),
     );
     setFilteredUsers(filtered);
   };
@@ -70,10 +69,10 @@ const AdminUsersPage = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-        {filteredUsers.map((user) => (
+        {filteredUsers?.map((user, index) => (
           <Link
-            key={user._id}
-            href={`${SiteLinks.manage_single_user.link}/${user._id}`}
+            key={user?._id ?? `user-${index}`} // Handle missing _id with fallback key
+            href={`${SiteLinks.manage_single_user.link}/${user?._id ?? "#"}`} // Ensure the link is safe
           >
             <motion.div
               className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
@@ -81,29 +80,34 @@ const AdminUsersPage = () => {
               whileTap={{ scale: 0.99 }}
             >
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                {user.name}
+                {user?.name ?? "N/A"} {/* Handle missing name */}
               </h2>
               <p className="text-gray-600">
-                <span className="font-semibold">Email:</span> {user.email}
+                <span className="font-semibold">Email:</span>{" "}
+                {user?.email ?? "N/A"} {/* Handle missing email */}
               </p>
               <p className="text-gray-600">
-                <span className="font-semibold">Phone:</span> {user.phone}
+                <span className="font-semibold">Phone:</span>{" "}
+                {user?.phone ?? "N/A"} {/* Handle missing phone */}
               </p>
               <p className="text-gray-600">
                 <span className="font-semibold">Enrollment:</span>{" "}
-                {user.Enrollment}
+                {user?.enrollment ?? "N/A"} {/* Handle missing enrollment */}
               </p>
               <p className="text-gray-600">
                 <span className="font-semibold">Active:</span>{" "}
-                {user.is_active ? "Yes" : "No"}
+                {user?.is_active ? "Yes" : "No"}{" "}
+                {/* Handle missing is_active */}
               </p>
               <p className="text-gray-600">
                 <span className="font-semibold">Verified:</span>{" "}
-                {user.is_verified ? "Yes" : "No"}
+                {user?.is_verified ? "Yes" : "No"}{" "}
+                {/* Handle missing is_verified */}
               </p>
             </motion.div>
           </Link>
-        ))}
+        )) ?? <p>No users found.</p>}{" "}
+        {/* Handle missing or empty user list */}
       </div>
     </div>
   );
