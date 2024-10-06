@@ -45,6 +45,7 @@ const LoginPage = () => {
         setLoading(false);
         window.location.reload();
       } else {
+        setLoading(false);
         toast.error(data.error || "An error occurred. Please try again");
       }
     } catch (error) {
@@ -120,7 +121,11 @@ const LoginPage = () => {
             </div>
             <button
               type="password"
-              className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+              className={`w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150
+                ${loading
+                  ? 'bg-indigo-400 curson-not-allowed'
+                  : 'hover:bg-indigo-500 active:bg-indigo-600 bg-indigo-600'
+                }`}
               onClick={() => setLoading(true)}
             >
               {loading ? (
