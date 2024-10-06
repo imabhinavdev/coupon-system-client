@@ -17,7 +17,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
           const devices = await Html5Qrcode.getCameras();
           setCameras(devices);
           if (devices.length) {
-            setSelectedCameraId(devices[1].id); // Default camera
+            setSelectedCameraId(devices[1]?.id ? devices[1].id : devices[0].id);
           }
         } catch (err) {
           console.error("Error getting cameras:", err);
