@@ -122,9 +122,10 @@ const LoginPage = () => {
             <button
               type="password"
               className={`w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150
-                ${loading
-                  ? 'bg-indigo-400 curson-not-allowed'
-                  : 'hover:bg-indigo-500 active:bg-indigo-600 bg-indigo-600'
+                ${
+                  loading
+                    ? "bg-indigo-400 curson-not-allowed"
+                    : "hover:bg-indigo-500 active:bg-indigo-600 bg-indigo-600"
                 }`}
               onClick={() => setLoading(true)}
             >

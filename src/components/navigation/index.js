@@ -17,6 +17,7 @@ const NavigationMenu = () => {
         { title: "Dashboard", path: "/admin/dashboard" },
         { title: "Manage Users", path: "/admin/users" },
         { title: "Coupon Category", path: "/admin/coupon-category" },
+        { title: "Settings", path: "/admin/settings" },
       ];
     } else if (user?.role === "staff") {
       return [
