@@ -33,28 +33,62 @@ const StaffDashboardScannedList = () => {
           <table className="min-w-full bg-white border border-black shadow-lg rounded-lg">
             <thead className="bg-black text-white sticky top-0">
               <tr>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">S.No</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">User Name</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Email</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Category</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Price</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">No. of Persons</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Transaction ID</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Scanned By</th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">Used</th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  S.No
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  User Name
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Email
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Category
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Price
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  No. of Persons
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Transaction ID
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Scanned By
+                </th>
+                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
+                  Used
+                </th>
               </tr>
             </thead>
             <tbody>
               {scannedCouponsList.map((coupon, idx) => (
                 <tr key={idx} className="border-b border-gray-300">
-                  <td className="py-3 px-4 sm:px-6 text-black font-medium">{idx + 1}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.userId.name}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.userId.email}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.couponCategoryId.name}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.couponCategoryId.price}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.noOfPerson}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.transactionId}</td>
-                  <td className="py-3 px-4 sm:px-6 text-black">{coupon.scannedBy}</td>
+                  <td className="py-3 px-4 sm:px-6 text-black font-medium">
+                    {idx + 1}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.userId.name}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.userId.email}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.couponCategoryId.name}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.couponCategoryId.price}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.noOfPerson}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.transactionId}
+                  </td>
+                  <td className="py-3 px-4 sm:px-6 text-black">
+                    {coupon.scannedBy}
+                  </td>
                   <td className="py-3 px-4 sm:px-6">
                     {coupon.isUsed ? (
                       <span className="text-green-600 font-medium">Yes</span>
