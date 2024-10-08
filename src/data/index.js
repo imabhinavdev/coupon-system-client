@@ -68,4 +68,7 @@ export const backendApi = {
   reset_password: `${backendUrl}/auth/reset-password/`,
   assign_coupon: `${backendUrl}/coupon/assign-coupon/`,
   generate_report: `${backendUrl}/transactions/generate-report/`,
+  scanned_coupons: `${backendUrl}/coupon/?date=today`,
+  footer: `${backendUrl}/settings/footer`,
+  website_name: `${backendUrl}/settings/website-name`,
 };
