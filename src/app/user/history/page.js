@@ -9,27 +9,38 @@ import { formatDate } from "@/utils/FormatDate";
 import { formatTime } from "@/utils/FormatTime";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useRouter } from "next/navigation";
+
+// Reusable TdElement for table data
+const TdElement = ({ children, className }) => (
+  <td className={`text-left py-3 px-4 ${className}`}>{children}</td>
+);
 
 const HistoryPage = () => {
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
+  const { user, userPermissions } = useContext(UserContext);
+  const router = useRouter();
 
   const handleModal = (coupon = null) => {
     setSelectedCoupon(coupon);
     setShowModal(!showModal);
   };
+  useEffect(() => {
+    if (!userPermissions?.includes("seeHistory")) {
+      toast.error("You are not authorized to view history");
+      router.push("/");
+    }
+  }, [userPermissions, router]);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
           `${backendApi.history}?user_id=${user._id}`,
-          {
-            method: "GET",
-          },
+          { method: "GET" }
         );
         const data = await response.json();
         if (response.ok) {
@@ -45,8 +56,10 @@ const HistoryPage = () => {
       }
     };
 
-    fetchOrders();
-  }, [user._id]);
+    if (userPermissions?.includes("seeHistory")) {
+      fetchOrders();
+    }
+  }, [user?._id]);
 
   return (
     <>
@@ -81,9 +94,9 @@ const HistoryPage = () => {
                   {[...Array(3)].map((_, idx) => (
                     <tr key={idx} className="border-b border-gray-300">
                       {Array.from({ length: 6 }).map((_, i) => (
-                        <td key={i} className="py-3 px-4">
+                        <TdElement key={i} className="py-3 px-4">
                           <Skeleton width={100} />
-                        </td>
+                        </TdElement>
                       ))}
                     </tr>
                   ))}
@@ -92,7 +105,7 @@ const HistoryPage = () => {
             </div>
           </div>
         </div>
-      ) : transactions?.length > 0 ? ( // Optional chaining here
+      ) : transactions.length > 0 ? (
         <div className="flex-grow h-full flex items-start justify-center rounded-xl">
           <div className="w-full">
             <h2 className="text-3xl font-bold text-secondary mb-6 text-left">
@@ -102,70 +115,49 @@ const HistoryPage = () => {
               <table className="min-w-full bg-primary border border-gray-200">
                 <thead>
                   <tr>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Sr. No.
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Coupon Name
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Purchasing Date
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Purchasing Time
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Price
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Purchasing Mode
-                    </th>
-                    <th className="py-3 px-4 text-left text-secondary border-b border-gray-300">
-                      Status
-                    </th>
+                    {[
+                      "Sr. No.",
+                      "Coupon Name",
+                      "Date",
+                      "Time",
+                      "Price",
+                      "Mode",
+                      "Status",
+                    ].map((heading, idx) => (
+                      <th
+                        key={idx}
+                        className="py-3 px-4 text-left text-secondary border-b border-gray-300"
+                      >
+                        {heading}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {transactions.map((transaction, idx) => (
                     <tr
-                      key={transaction?.id ?? idx} // Fallback to index if id is missing
+                      key={transaction?.id ?? idx}
                       className="border-b border-gray-300"
                     >
-                      <td className="text-left py-3 px-4 text-secondary">
-                        {idx + 1}
-                      </td>
-                      <td className="text-left py-3 px-4 text-secondary">
-                        {transaction?.couponCategoryId?.name ?? "N/A"}{" "}
-                        {/* Optional chaining and fallback */}
-                      </td>
-                      <td className="text-left py-3 px-4 text-secondary">
-                        {formatDate(transaction?.createdAt) ?? "N/A"}{" "}
-                        {/* Optional chaining */}
-                      </td>
-                      <td className="text-left py-3 px-4 text-secondary">
-                        {formatTime(transaction?.createdAt) ?? "N/A"}{" "}
-                        {/* Optional chaining */}
-                      </td>
-                      <td className="text-left py-3 px-4 text-secondary">
-                        ₹{transaction?.amount ?? "N/A"}{" "}
-                        {/* Optional chaining */}
-                      </td>
-                      <td className="text-left py-3 px-4 capitalize text-secondary">
-                        {transaction?.paymentMode ?? "N/A"}{" "}
-                        {/* Optional chaining */}
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        <span
-                          className={`capitalize font-semibold ${
-                            transaction?.status === "success"
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {transaction?.status ?? "N/A"}{" "}
-                          {/* Optional chaining */}
-                        </span>
-                      </td>
+                      <TdElement>{idx + 1}</TdElement>
+                      <TdElement>
+                        {transaction?.couponCategoryId?.name ?? "N/A"}
+                      </TdElement>
+                      <TdElement>
+                        {formatDate(transaction?.createdAt) ?? "N/A"}
+                      </TdElement>
+                      <TdElement>
+                        {formatTime(transaction?.createdAt) ?? "N/A"}
+                      </TdElement>
+                      <TdElement>₹{transaction?.amount ?? "N/A"}</TdElement>
+                      <TdElement className="capitalize">
+                        {transaction?.paymentMode ?? "N/A"}
+                      </TdElement>
+                      <TdElement
+                        className={`capitalize font-semibold ${transaction?.status === "success" ? "text-green-500" : "text-red-500"}`}
+                      >
+                        {transaction?.status ?? "N/A"}
+                      </TdElement>
                     </tr>
                   ))}
                 </tbody>

@@ -1,7 +1,6 @@
 "use client";
 import { useState, createContext, useEffect } from "react";
 import { backendApi } from "@/data";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { LoadingIcon } from "@/components/icons";
 
 export const UserContext = createContext();
@@ -9,6 +8,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [userPermissions, setUserPermissions] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
         const data = await response.json();
         if (response.ok) {
           setUser(data.user);
+          setUserPermissions(data.user.permissions);
         }
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -42,7 +43,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, userPermissions }}>
       {children}
     </UserContext.Provider>
   );

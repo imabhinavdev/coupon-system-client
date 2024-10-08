@@ -9,29 +9,79 @@ import Logout from "../logout";
 
 const NavigationMenu = () => {
   const [state, setState] = useState(false);
-  const { user } = useContext(UserContext);
-  // Define navigation data based on user role
+  const { user, userPermissions } = useContext(UserContext);
+
+  // Define navigation data based on user role and permissions
   const getNavigationData = () => {
+    let data = [];
+
     if (user?.role === "admin") {
-      return [
-        { title: "Dashboard", path: "/admin/dashboard" },
-        { title: "Manage Users", path: "/admin/users" },
-        { title: "Coupon Category", path: "/admin/coupon-category" },
+      data = [
+        {
+          title: "Dashboard",
+          path: "/admin/dashboard",
+          requiredPermission: "seeDashboard",
+        },
+        {
+          title: "Manage Users",
+          path: "/admin/users",
+          requiredPermission: "manageUsers",
+        },
+        {
+          title: "Coupon Category",
+          path: "/admin/coupon-category",
+          requiredPermission: "manageCoupons",
+        },
       ];
     } else if (user?.role === "staff") {
-      return [
-        { title: "Coupons", path: "/staff/coupons" },
-        { title: "Orders", path: "/staff/orders" },
-        { title: "History", path: "/staff/history" },
+      data = [
+        {
+          title: "Coupons",
+          path: "/staff/coupons",
+          requiredPermission: "seeCoupons",
+        },
+        {
+          title: "Orders",
+          path: "/staff/orders",
+          requiredPermission: "seeOrders",
+        },
+        {
+          title: "History",
+          path: "/staff/history",
+          requiredPermission: "seeHistory",
+        },
       ];
     } else {
-      return [
-        { title: "Coupons", path: "/user/coupons" },
-        { title: "Your Orders", path: "/user/orders" },
-        { title: "History", path: "/user/history" },
-        { title: "Contact Us", path: "/contact" },
+      data = [
+        {
+          title: "Coupons",
+          path: "/user/coupons",
+          requiredPermission: "seeCoupons",
+        },
+        {
+          title: "Your Orders",
+          path: "/user/orders",
+          requiredPermission: "seeOrders",
+        },
+        {
+          title: "History",
+          path: "/user/history",
+          requiredPermission: "seeHistory",
+        },
+        {
+          title: "Contact Us",
+          path: "/contact",
+          requiredPermission: "seeContact",
+        },
       ];
     }
+
+    // Filter out items based on user permissions
+    return data.filter(
+      (item) =>
+        !item.requiredPermission ||
+        userPermissions?.includes(item.requiredPermission)
+    );
   };
 
   const navigationData = getNavigationData();
@@ -92,9 +142,7 @@ const NavigationMenu = () => {
           </div>
         </div>
         <div
-          className={`flex-1 items-center mt-8 md:mt-0 md:flex ${
-            state ? "block" : "hidden"
-          } `}
+          className={`flex-1 items-center mt-8 md:mt-0 md:flex ${state ? "block" : "hidden"} `}
         >
           <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
             {navigationData.map((item, idx) => (
