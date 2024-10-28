@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,25 +15,22 @@ const SiteIcon = ({ className }) => {
         const response = await fetch(backendApi.website_name);
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
           setSiteName(data.websiteName);
         } else {
           console.log("Error fetching data");
         }
       } catch {
         console.log("error");
-      }finally{
-        setLoading(false)
-      } 
-    }
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchSiteName();
   }, []);
 
   return (
     <Link href="/" className={`text-2xl font-bold  ${className}`}>
-      {
-        loading ? <LoadingIcon className="w-5 h-5"/> : siteName.value
-      }
+      {loading ? <LoadingIcon className="w-5 h-5" /> : siteName.value}
     </Link>
   );
 };

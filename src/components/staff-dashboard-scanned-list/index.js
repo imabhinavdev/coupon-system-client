@@ -12,7 +12,6 @@ const StaffDashboardScannedList = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.coupons);
         setScannedCouponsList(data.coupons);
       } else {
         console.log("Error fetching data");

@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { LoadingIcon } from "../icons";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const [footer, setFooter] = useState("");
@@ -17,10 +18,9 @@ const Footer = () => {
           const data = await response.json();
           setFooter(data.footer);
         } else {
-          console.log("Error fetching data");
         }
       } catch {
-        console.log("error");
+        toast.error("Failed to fetch footer");
       } finally {
         setLoading(false);
       }
