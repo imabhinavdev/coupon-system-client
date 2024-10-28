@@ -71,4 +71,5 @@ export const backendApi = {
   scanned_coupons: `${backendUrl}/coupon/?date=today`,
   footer: `${backendUrl}/settings/footer`,
   website_name: `${backendUrl}/settings/website-name`,
+  delete_user: `${backendUrl}/users/`,
 };

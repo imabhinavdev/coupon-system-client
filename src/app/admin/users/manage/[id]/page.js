@@ -17,6 +17,7 @@ const ManageUserData = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAssignCouponModalOpen, setIsAssignCouponModalOpen] = useState(false);
 
+  // Fetch user details
   const fetchDetails = async () => {
     try {
       const response = await fetch(`${backendApi.all_details_of_user}/${id}`);
@@ -31,6 +32,24 @@ const ManageUserData = () => {
     }
   };
 
+  // Delete user logic
+  const handleDeleteUser = async () => {
+    try {
+      const response = await fetch(`${backendApi.delete_user}${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        toast.success("User deleted successfully");
+        
+        // Optionally, redirect or refresh the page if necessary
+      } else {
+        toast.error("Error deleting user");
+      }
+    } catch (error) {
+      toast.error("Error deleting user");
+    }
+  };
+
   useEffect(() => {
     fetchDetails();
   }, []);
@@ -42,6 +61,7 @@ const ManageUserData = () => {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
+
   const closeAssignCouponModal = () => {
     setIsAssignCouponModalOpen(false);
   };
@@ -67,6 +87,7 @@ const ManageUserData = () => {
           <span>
             <DropdownMenu
               onEdit={openEditModal}
+              onDelete={handleDeleteUser} // Pass delete handler
               showAssignCoupon
               onAssign={() => {
                 setIsAssignCouponModalOpen(true);
@@ -225,23 +246,17 @@ const ManageUserData = () => {
                         <td className="p-2 border text-center">
                           {transaction?.couponCategoryId?.name ?? "N/A"}
                         </td>
-                        <td className="p-2 border text-center min-w-fit text-nowrap">
+                        <td className="p-2 border text-center">
                           {formatDate(transaction?.createdAt ?? null)}
                         </td>
-                        <td className="p-2 border text-center min-w-fit text-nowrap">
+                        <td className="p-2 border text-center">
                           {formatTime(transaction?.createdAt ?? null)}
                         </td>
                         <td className="p-2 border text-center">
-                          ₹ {transaction?.amount ?? 0}
+                          {transaction?.amount ?? "N/A"}
                         </td>
-                        <td
-                          className={`p-2 capitalize border text-center ${
-                            transaction?.status === "success"
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {transaction?.status ?? "Unknown"}
+                        <td className="p-2 border text-center">
+                          {transaction?.status}
                         </td>
                       </tr>
                     )) ?? (
