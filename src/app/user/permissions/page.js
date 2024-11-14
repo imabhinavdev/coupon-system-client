@@ -30,27 +30,17 @@ const PermissionsPage = () => {
   const { userPermissions } = useContext(UserContext);
   const router = useRouter();
 
-  // Check if the user has the required permission to view the page
-  useEffect(() => {
-    if (!userPermissions?.includes(Permissions.managePermissions)) {
-      toast.error("You do not have permission to view this page.");
-      router.push("/"); // Redirect to homepage or another page if permission is denied
-    }
-  }, [userPermissions, router]);
-
-  // If the user doesn't have permission, return null to prevent rendering the page
-  if (!userPermissions?.includes(Permissions.managePermissions)) {
-    return null;
-  }
-
-  // Fetch permissions
+  // Fetch permissions (always called)
   const {
     data: permissions,
     isLoading,
     error,
-  } = useQuery({ queryKey: ["permissions"], queryFn: fetchPermissions });
+  } = useQuery({
+    queryKey: ["permissions"],
+    queryFn: fetchPermissions,
+  });
 
-  // Mutation for deleting a permission
+  // Mutation for deleting a permission (always called)
   const deleteMutation = useMutation({
     mutationFn: async (permissionId) => {
       return await axios.delete(`${backendApi.permissions}/${permissionId}`);
@@ -65,10 +55,25 @@ const PermissionsPage = () => {
     },
   });
 
+  // Check if the user has the required permission to view the page (done after fetching user permissions)
+  useEffect(() => {
+    if (!userPermissions?.includes(Permissions.managePermissions)) {
+      toast.error("You do not have permission to view this page.");
+      router.push("/"); // Redirect to homepage or another page if permission is denied
+    }
+  }, [userPermissions, router]);
+
+  // If user doesn't have permission, return null to prevent rendering the page
+  if (!userPermissions?.includes(Permissions.managePermissions)) {
+    return null;
+  }
+
+  // Handle deleting permission
   const handleDeletePermission = (permissionId) => {
     deleteMutation.mutate(permissionId);
   };
 
+  // Open the edit permission modal
   const openEditModal = (permissionId) => {
     setSelectedPermissionId(permissionId);
     setEditPermissionModalOpen(true);
