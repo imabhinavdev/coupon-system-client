@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import SiteIcon from "@/components/site-title";
 import { UserContext } from "@/context/UserContext";
-import { SiteLinks } from "@/data";
+import { Permissions, SiteLinks } from "@/data";
 import { RightArrowIcon } from "@/components/icons";
 import Logout from "../logout";
 
@@ -13,68 +13,38 @@ const NavigationMenu = () => {
 
   // Define navigation data based on user role and permissions
   const getNavigationData = () => {
-    let data = [];
-
-    if (user?.role === "admin") {
-      data = [
-        {
-          title: "Dashboard",
-          path: "/admin/dashboard",
-          requiredPermission: "seeDashboard",
-        },
-        {
-          title: "Manage Users",
-          path: "/admin/users",
-          requiredPermission: "manageUsers",
-        },
-        {
-          title: "Coupon Category",
-          path: "/admin/coupon-category",
-          requiredPermission: "manageCoupons",
-        },
-      ];
-    } else if (user?.role === "staff") {
-      data = [
-        {
-          title: "Coupons",
-          path: "/staff/coupons",
-          requiredPermission: "seeCoupons",
-        },
-        {
-          title: "Orders",
-          path: "/staff/orders",
-          requiredPermission: "seeOrders",
-        },
-        {
-          title: "History",
-          path: "/staff/history",
-          requiredPermission: "seeHistory",
-        },
-      ];
-    } else {
-      data = [
-        {
-          title: "Coupons",
-          path: "/user/coupons",
-          requiredPermission: "seeCoupons",
-        },
-        {
-          title: "Your Orders",
-          path: "/user/orders",
-          requiredPermission: "seeOrders",
-        },
-        {
-          title: "History",
-          path: "/user/history",
-          requiredPermission: "seeHistory",
-        },
-        {
-          title: "Contact Us",
-          path: "/contact",
-          requiredPermission: "seeContact",
-        },
-      ];
-    }
+    let data = [
+      {
+        title: "Coupons",
+        path: "/user/coupons",
+        requiredPermission: Permissions.seeCoupons,
+      },
+      {
+        title: "Your Orders",
+        path: "/user/orders",
+        requiredPermission: Permissions.seeOrders,
+      },
+      {
+        title: "History",
+        path: "/user/history",
+        requiredPermission: Permissions.seeHistory,
+      },
+      {
+        title: "Contact Us",
+        path: "/contact",
+        requiredPermission: Permissions.seeContact,
+      },
+      {
+        title: "Roles",
+        path: "/user/roles",
+        requiredPermission: Permissions.manageRoles,
+      },
+      {
+        title: "Permissions",
+        path: "/user/permissions",
+        requiredPermission: Permissions.managePermissions,
+      },
+    ];
 
     // Filter out items based on user permissions
     return data.filter(

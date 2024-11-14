@@ -96,8 +96,11 @@ const Signup = () => {
         }
       } catch (error) {
         toast.error("An error occurred. Please try again");
+      } finally {
+        setLoading(false);
       }
     };
+
     saveUser();
   };
 
@@ -129,6 +132,8 @@ const Signup = () => {
         }
       } catch (error) {
         toast.error("An error occurred. Please try again");
+      } finally {
+        setLoading(false);
       }
     };
     verifyOtp();

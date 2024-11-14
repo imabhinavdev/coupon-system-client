@@ -25,12 +25,12 @@ const SiteIcon = ({ className }) => {
         setLoading(false);
       }
     };
-    fetchSiteName();
+    // fetchSiteName();
   }, []);
 
   return (
     <Link href="/" className={`text-2xl font-bold  ${className}`}>
-      {loading ? <LoadingIcon className="w-5 h-5" /> : siteName.value}
+      Coupon System
     </Link>
   );
 };

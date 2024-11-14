@@ -72,4 +72,33 @@ export const backendApi = {
   footer: `${backendUrl}/settings/footer`,
   website_name: `${backendUrl}/settings/website-name`,
   delete_user: `${backendUrl}/users/`,
+  permissions: `${backendUrl}/permissions/`,
+  roles: `${backendUrl}/roles/`,
+};
+
+export const Permissions = {
+  seeCoupons: "seeCoupons",
+  seeOrders: "seeOrders",
+  seeHistory: "seeHistory",
+  seeContact: "seeContact",
+  manageUsers: "manageUsers",
+  manageCoupons: "manageCoupons",
+  manageOrders: "manageOrders",
+  manageHistory: "manageHistory",
+  manageContact: "manageContact",
+  manageRoles: "manageHistory",
+  manageWebsite: "manageWebsite",
+  manageFooter: "manageFooter",
+  addRoles: "addRoles",
+  addPermissions: "addPermissions",
+  managePermissions: "managePermissions",
+  manageRoles: "manageRoles",
+  manageUsers: "manageUsers",
+  editRoles: "editRoles",
+  editPermissions: "editPermissions",
+  editUsers: "editUsers",
+  deleteRoles: "deleteRoles",
+  deletePermissions: "deletePermissions",
+  deleteUsers: "deleteUsers",
+  
 };

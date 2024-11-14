@@ -50,6 +50,8 @@ const LoginPage = () => {
       }
     } catch (error) {
       toast.error("An error occurred. Please try again");
+    } finally {
+      setLoading(false);
     }
   };
 
