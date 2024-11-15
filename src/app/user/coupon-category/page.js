@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import AddCouponCategoryModal from "@/components/add-coupon-category-modal";
 import EditCouponCategoryModal from "@/components/edit-coupon-category-modal";
 import DropdownMenu from "@/components/context-drop-menu";
 import { backendApi } from "@/data";
 import { formatDate } from "@/utils/FormatDate";
+import { UserContext } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
+import { Permissions } from "@/data";
 
 const AdminCouponCategoryDashboard = () => {
   const [couponCategory, setCouponCategory] = useState([]);
@@ -13,6 +16,14 @@ const AdminCouponCategoryDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const { userPermissions } = useContext(UserContext);
+  const router = useRouter();
+  useEffect(() => {
+    if (!userPermissions?.includes(Permissions.manageCouponCategory)) {
+      toast.error("You do not have permission to view this page.");
+      router.push("/");
+    }
+  }, [userPermissions, router]);
 
   useEffect(() => {
     const fetchCouponCategory = async () => {
@@ -32,7 +43,7 @@ const AdminCouponCategoryDashboard = () => {
   }, [isEditModalOpen, isModalOpen]);
 
   const filteredCategories = couponCategory.filter((category) =>
-    category.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+    category.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleDelete = async (id) => {
@@ -42,7 +53,7 @@ const AdminCouponCategoryDashboard = () => {
       });
       if (response.ok) {
         setCouponCategory((prev) =>
-          prev.filter((category) => category._id !== id),
+          prev.filter((category) => category._id !== id)
         ); // Remove deleted category from state
         toast.error("Coupon category deleted successfully.");
       } else {
@@ -68,11 +79,11 @@ const AdminCouponCategoryDashboard = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedCategory),
-        },
+        }
       );
       if (response.ok) {
         const updatedCategories = couponCategory.map((cat) =>
-          cat.id === updatedCategory.id ? updatedCategory : cat,
+          cat.id === updatedCategory.id ? updatedCategory : cat
         );
         setCouponCategory(updatedCategories); // Update state with the edited category
         toast.success("Coupon category updated successfully.");
@@ -109,12 +120,14 @@ const AdminCouponCategoryDashboard = () => {
         </div>
 
         <div className="w-full md:w-auto">
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Add New Category
-          </button>
+          {userPermissions?.includes(Permissions.addCouponCategory) && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Add New Category
+            </button>
+          )}
         </div>
       </div>
 

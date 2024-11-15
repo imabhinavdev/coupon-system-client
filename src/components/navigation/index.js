@@ -8,12 +8,17 @@ import { RightArrowIcon } from "@/components/icons";
 import Logout from "../logout";
 
 const NavigationMenu = () => {
-  const [state, setState] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, userPermissions } = useContext(UserContext);
 
-  // Define navigation data based on user role and permissions
   const getNavigationData = () => {
     let data = [
+      {
+        title: "Dashboard",
+        path: "/user/dashboard",
+        requiredPermission: Permissions.seeDashboard,
+      },
       {
         title: "Coupons",
         path: "/user/coupons",
@@ -34,6 +39,9 @@ const NavigationMenu = () => {
         path: "/contact",
         requiredPermission: Permissions.seeContact,
       },
+    ];
+
+    let manageData = [
       {
         title: "Roles",
         path: "/user/roles",
@@ -44,32 +52,53 @@ const NavigationMenu = () => {
         path: "/user/permissions",
         requiredPermission: Permissions.managePermissions,
       },
+      {
+        title: "Coupon Category",
+        path: "/user/coupon-category",
+        requiredPermission: Permissions.manageCouponCategory,
+      },
+      {
+        title: "Users",
+        path: "/user/users",
+        requiredPermission: Permissions.manageCouponCategory,
+      },
     ];
 
-    // Filter out items based on user permissions
-    return data.filter(
-      (item) =>
-        !item.requiredPermission ||
-        userPermissions?.includes(item.requiredPermission)
-    );
+    return {
+      main: data.filter(
+        (item) =>
+          !item.requiredPermission ||
+          userPermissions?.includes(item.requiredPermission)
+      ),
+      manage: manageData.filter(
+        (item) =>
+          !item.requiredPermission ||
+          userPermissions?.includes(item.requiredPermission)
+      ),
+    };
   };
 
-  const navigationData = getNavigationData();
+  const { main: navigationData, manage: manageDropdownData } =
+    getNavigationData();
 
   useEffect(() => {
-    document.onclick = (e) => {
+    const handleClickOutside = (e) => {
       const target = e.target;
-      if (!target.closest(".menu-btn")) setState(false);
+      if (!target.closest(".menu-btn")) setMenuOpen(false);
+      if (!target.closest(".dropdown-menu") && !target.closest(".dropdown-btn"))
+        setDropdownOpen(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   return (
     <nav
-      className={`bg-white pb-2 md:text-sm ${
-        state
-          ? "shadow-lg rounded-xl border mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0"
-          : ""
-      }`}
+      className={`bg-white pb-2 md:text-sm ${menuOpen ? "shadow-lg rounded-xl border mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0" : ""}`}
     >
       <div className="gap-x-14 items-center mx-auto px-4 md:flex md:px-0">
         <div className="flex items-center justify-between py-5 md:block">
@@ -77,14 +106,14 @@ const NavigationMenu = () => {
           <div className="md:hidden">
             <button
               className="menu-btn text-gray-500 hover:text-gray-800"
-              onClick={() => setState(!state)}
+              onClick={() => setMenuOpen(!menuOpen)}
             >
-              {state ? (
+              {menuOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  className={`w-6 h-6`}
+                  className="w-6 h-6"
                 >
                   <path
                     fillRule="evenodd"
@@ -99,7 +128,7 @@ const NavigationMenu = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className={` w-6 h-6`}
+                  className="w-6 h-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -112,7 +141,7 @@ const NavigationMenu = () => {
           </div>
         </div>
         <div
-          className={`flex-1 items-center mt-8 md:mt-0 md:flex ${state ? "block" : "hidden"} `}
+          className={`flex-1 items-center mt-8 md:mt-0 md:flex ${menuOpen ? "block" : "hidden"}`}
         >
           <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
             {navigationData.map((item, idx) => (
@@ -122,6 +151,28 @@ const NavigationMenu = () => {
                 </Link>
               </li>
             ))}
+            <li className="relative text-gray-700 hover:text-gray-900">
+              <button
+                className="dropdown-btn block text-md"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents triggering handleClickOutside
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
+                Manage
+              </button>
+              {dropdownOpen && (
+                <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 w-40 space-y-2 z-10 right-0">
+                  {manageDropdownData.map((item, idx) => (
+                    <li key={idx} className="hover:bg-gray-100">
+                      <Link href={item.path} className="block px-4 py-2">
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
           </ul>
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
             {!user ? (

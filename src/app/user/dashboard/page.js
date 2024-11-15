@@ -146,7 +146,7 @@ const AdminDashboard = () => {
     <>
       <div className="text-3xl font-semibold mb-2 flex flex-col md:flex-row gap-5 md:gap-0 justify-between">
         <div className="flex flex-col">
-          <h1>Admin Dashboard</h1>
+          <h1>Dashboard</h1>
           <button
             disabled={reportLoading}
             onClick={handleGenerateReport}

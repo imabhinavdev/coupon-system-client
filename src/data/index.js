@@ -19,7 +19,7 @@ export const SiteLinks = {
   },
   manage_single_user: {
     title: "Manage User",
-    link: "/admin/users/manage",
+    link: "/user/users/manage",
   },
 
   admin_staff_users: {
@@ -74,6 +74,7 @@ export const backendApi = {
   delete_user: `${backendUrl}/users/`,
   permissions: `${backendUrl}/permissions/`,
   roles: `${backendUrl}/roles/`,
+  users: `${backendUrl}/users/`,
 };
 
 export const Permissions = {
@@ -100,5 +101,11 @@ export const Permissions = {
   deleteRoles: "deleteRoles",
   deletePermissions: "deletePermissions",
   deleteUsers: "deleteUsers",
-  
+  scanQr: "scanQr",
+  manageCouponCategory: "manageCouponCategory",
+  generateReport: "generateReport",
+  addCouponCategory: "addCouponCategory",
+  editCouponCategory: "editCouponCategory",
+  deleteCouponCategory: "deleteCouponCategory",
+  seeDashboard: "seeDashboard",
 };

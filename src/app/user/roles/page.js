@@ -114,9 +114,7 @@ const RolesPage = () => {
               <th className="px-6 py-3 border-b font-semibold text-left">
                 Status
               </th>
-              <th className="px-6 py-3 border-b font-semibold text-left">
-                Permissions
-              </th>
+              
               <th className="px-6 py-3 border-b font-semibold text-left">
                 Actions
               </th>
@@ -139,9 +137,9 @@ const RolesPage = () => {
                     {role.isActive ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="px-6 py-4 border-b text-gray-600">
+                {/* <td className="px-6 py-4 border-b text-gray-600">
                   {role.permissions.map((perm) => perm.name).join(", ")}
-                </td>
+                </td> */}
                 <td className="px-6 py-4 border-b flex gap-1">
                   {userPermissions?.includes(Permissions.editRoles) && (
                     <button

@@ -1,8 +1,28 @@
+"use client";
 import QRScannerModal from "@/components/qr-scanner";
 import StaffDashboardScannedList from "@/components/staff-dashboard-scanned-list";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { UserContext } from "@/context/UserContext";
+import { Permissions } from "@/data";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const StaffDashboard = () => {
+  const { userPermissions } = useContext(UserContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!userPermissions.includes(Permissions.scanQr)) {
+      toast.error("You do not have permission to scan QR codes");
+      router.push("/");
+    }
+  }, [userPermissions, router]);
+
+  // Render null if the user lacks the permission to scan QR codes
+  if (!userPermissions.includes(Permissions.scanQr)) {
+    return null;
+  }
+
   return (
     <div className="h-full w-full">
       <div className="flex flex-col items-center justify-center flex-grow h-full">
