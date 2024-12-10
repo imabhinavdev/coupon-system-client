@@ -40,7 +40,7 @@ const ManageUserData = () => {
       });
       if (response.ok) {
         toast.success("User deleted successfully");
-        
+
         // Optionally, redirect or refresh the page if necessary
       } else {
         toast.error("Error deleting user");
@@ -127,7 +127,10 @@ const ManageUserData = () => {
           <div>
             <p>
               <strong>Role:</strong>
-              <span className="capitalize"> {data?.user?.role ?? "N/A"}</span>
+              <span className="capitalize">
+                {" "}
+                {data?.user?.role?.name ?? "N/A"}
+              </span>
             </p>
           </div>
         </div>

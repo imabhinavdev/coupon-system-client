@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { backendApi } from "@/data";
 
@@ -12,6 +12,8 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
     isActive: userData.isActive,
     role: userData.role,
   });
+
+  const [roles, setRoles] = useState([]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +30,7 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        },
+        }
       );
       if (response.ok) {
         onUpdate(); // Refresh the user details
@@ -41,6 +43,22 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
       toast.error("Error updating user details");
     }
   };
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await fetch(backendApi.roles);
+        const data = await response.json();
+        if (response.ok) {
+          setRoles(data.roles);
+        }
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+        toast.error("Error fetching roles");
+      }
+    };
+    fetchRoles();
+  }, []);
 
   if (!isOpen) return null;
 
@@ -114,19 +132,18 @@ const EditUserModal = ({ isOpen, onClose, userData, onUpdate }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">Staff</label>
+            <label className="block text-sm font-medium">Role</label>
             <select
               name="role"
               value={formData.role}
               onChange={handleChange}
               className="mt-1 block p-2 w-full border border-gray-300 rounded-md"
             >
-              <option value="admin">Admin</option>
-              <option value="staff">Staff</option>
-              <option value="user">User</option>
-              <option value="faculty">Faculty</option>
-              <option value="other">Other</option>
-              <option value="superadmin">Superadmin</option>
+              {roles.map((role) => (
+                <option key={role._id} value={role._id}>
+                  {role.name}
+                </option>
+              ))}
             </select>
           </div>
 

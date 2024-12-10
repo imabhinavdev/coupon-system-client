@@ -62,6 +62,11 @@ const NavigationMenu = () => {
         path: "/user/users",
         requiredPermission: Permissions.manageCouponCategory,
       },
+      {
+        title: "Scan QR",
+        path: "/user/scan-qr",
+        requiredPermission: Permissions.scanQr,
+      },
     ];
 
     return {
@@ -151,28 +156,30 @@ const NavigationMenu = () => {
                 </Link>
               </li>
             ))}
-            <li className="relative text-gray-700 hover:text-gray-900">
-              <button
-                className="dropdown-btn block text-md"
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevents triggering handleClickOutside
-                  setDropdownOpen(!dropdownOpen);
-                }}
-              >
-                Manage
-              </button>
-              {dropdownOpen && (
-                <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 w-40 space-y-2 z-10 right-0">
-                  {manageDropdownData.map((item, idx) => (
-                    <li key={idx} className="hover:bg-gray-100">
-                      <Link href={item.path} className="block px-4 py-2">
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+            {manageDropdownData.length > 0 && (
+              <li className="relative text-gray-700 hover:text-gray-900">
+                <button
+                  className="dropdown-btn block text-md"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering handleClickOutside
+                    setDropdownOpen(!dropdownOpen);
+                  }}
+                >
+                  Manage
+                </button>
+                {dropdownOpen && (
+                  <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 w-40 space-y-2 z-10 right-0">
+                    {manageDropdownData.map((item, idx) => (
+                      <li key={idx} className="hover:bg-gray-100">
+                        <Link href={item.path} className="block px-4 py-2">
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            )}
           </ul>
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
             {!user ? (

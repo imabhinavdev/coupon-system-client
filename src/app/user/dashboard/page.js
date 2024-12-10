@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import { Chart, defaults } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { backendApi } from "@/data";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "@/components/icons";
-
+import { UserContext } from "@/context/UserContext";
 defaults.aspectRatio = false;
 defaults.responsive = true;
 defaults.plugins.title.display = true;
@@ -15,6 +15,7 @@ defaults.plugins.title.color = "black";
 
 const AdminDashboard = () => {
   const [reportLoading, setReportLoading] = useState(false);
+  const { userPermissions } = useContext(UserContext);
   const [dashboardData, setDashboardData] = useState({
     revenueByCategory: [],
     revenueOverTime: [],
@@ -88,19 +89,19 @@ const AdminDashboard = () => {
 
   const memoizedDoughnutChart = useMemo(
     () => <DoughnutChart data={dashboardData.revenueByCategory} />,
-    [dashboardData.revenueByCategory],
+    [dashboardData.revenueByCategory]
   );
   const memoizedBarChart = useMemo(
     () => <BarChart data={dashboardData.revenueByCategory} />,
-    [dashboardData.revenueByCategory],
+    [dashboardData.revenueByCategory]
   );
   const memoizedLineChart = useMemo(
     () => <LineChart data={dashboardData.revenueOverTime} />,
-    [dashboardData.revenueOverTime],
+    [dashboardData.revenueOverTime]
   );
   const memoizedWeekdayBarChart = useMemo(
     () => <WeekdayBarChart data={dashboardData.couponStatsByWeekday} />,
-    [dashboardData.couponStatsByWeekday],
+    [dashboardData.couponStatsByWeekday]
   );
 
   if (loading) {
@@ -147,16 +148,22 @@ const AdminDashboard = () => {
       <div className="text-3xl font-semibold mb-2 flex flex-col md:flex-row gap-5 md:gap-0 justify-between">
         <div className="flex flex-col">
           <h1>Dashboard</h1>
-          <button
-            disabled={reportLoading}
-            onClick={handleGenerateReport}
-            className="text-sm flex gap-2 justify-center bg-secondary rounded p-2 text-primary disabled:bg-gray-800 "
-          >
-            Generate Report
-            {reportLoading && (
-              <LoadingIcon color="#fff" className="animate-spin h-5 w-5 ml-2" />
-            )}
-          </button>
+
+          {userPermissions.includes("generateReport") && (
+            <button
+              disabled={reportLoading}
+              onClick={handleGenerateReport}
+              className="text-sm flex gap-2 justify-center bg-secondary rounded p-2 text-primary disabled:bg-gray-800 "
+            >
+              Generate Report
+              {reportLoading && (
+                <LoadingIcon
+                  color="#fff"
+                  className="animate-spin h-5 w-5 ml-2"
+                />
+              )}
+            </button>
+          )}
         </div>
         <h1 className="text-2xl font-semibold mb-4">
           Total Revenue:{" "}
@@ -269,7 +276,7 @@ const DoughnutChart = ({ data, label = "Revenue Distribution" }) => {
 const BarChart = ({ data, label = "Revenue Comparison" }) => {
   const backgroundColors = data.map(() => generateRandomColor());
   const borderColors = backgroundColors.map((color) =>
-    color.replace("0.2", "1"),
+    color.replace("0.2", "1")
   );
 
   return (
@@ -314,7 +321,7 @@ const LineChart = ({ data, label = "Revenue Over Time" }) => {
       <Line
         data={{
           labels: sortedData.map((item) =>
-            new Date(item.date).toLocaleDateString(),
+            new Date(item.date).toLocaleDateString()
           ),
           datasets: [
             {
@@ -341,7 +348,7 @@ const LineChart = ({ data, label = "Revenue Over Time" }) => {
 const WeekdayBarChart = ({ data, label = "Coupons Sold by Day" }) => {
   const backgroundColors = data.map(() => generateRandomColor());
   const borderColors = backgroundColors.map((color) =>
-    color.replace("0.2", "1"),
+    color.replace("0.2", "1")
   );
 
   return (
