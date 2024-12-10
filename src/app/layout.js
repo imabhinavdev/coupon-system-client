@@ -1,3 +1,4 @@
+// layouts/RootLayout.js
 import "./globals.css";
 import NavigationBar from "@/components/navigation";
 import { Poppins } from "next/font/google";
@@ -7,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/context/UserContext";
 import "react-loading-skeleton/dist/skeleton.css";
 import QueryProvider from "@/providers/QueryClientProvider";
+
 const dmsans = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -22,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between  gap-2`}
+        className={`${dmsans.className}  max-w-screen-xl md:mx-auto flex-col flex min-h-screen justify-between gap-2`}
       >
         <QueryProvider>
           <UserProvider>

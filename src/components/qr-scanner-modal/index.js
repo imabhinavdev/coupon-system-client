@@ -91,7 +91,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
         },
         (errorMessage) => {
           console.warn("QR scanning error:", errorMessage);
-        },
+        }
       )
       .then(() => {
         setScanning(true); // Set scanning to true when it starts

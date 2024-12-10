@@ -99,13 +99,13 @@ const Orders = () => {
                     {formatDate(order?.createdAt) ?? "N/A"} at{" "}
                     {formatTime(order?.createdAt) ?? "N/A"}
                   </span>
-                  <p className="mt-2 flex w-full justify-between flex-col md:flex-row">
+                  <p className="mt-2 flex w-full justify-between flex-col md:flex-row gap-1">
                     <span>
                       ₹
                       {(order?.couponCategoryId?.price ?? 0) *
                         (order?.noOfPerson ?? 0)}
                     </span>
-                    <span>No of Persons: {order?.noOfPerson ?? 0}</span>
+                    <span> No of Persons: {order?.noOfPerson ?? 0}</span>
                   </p>
                 </div>
                 <button

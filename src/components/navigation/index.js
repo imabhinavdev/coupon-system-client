@@ -6,11 +6,13 @@ import { UserContext } from "@/context/UserContext";
 import { Permissions, SiteLinks } from "@/data";
 import { RightArrowIcon } from "@/components/icons";
 import Logout from "../logout";
+import { usePathname } from "next/navigation";
 
 const NavigationMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, userPermissions } = useContext(UserContext);
+  const pathname = usePathname();
 
   const getNavigationData = () => {
     let data = [
@@ -89,9 +91,15 @@ const NavigationMenu = () => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       const target = e.target;
-      if (!target.closest(".menu-btn")) setMenuOpen(false);
-      if (!target.closest(".dropdown-menu") && !target.closest(".dropdown-btn"))
+      if (!target.closest(".menu-btn") && !target.closest(".dropdown-btn")) {
+        setMenuOpen(false);
+      }
+      if (
+        !target.closest(".dropdown-menu") &&
+        !target.closest(".dropdown-btn")
+      ) {
         setDropdownOpen(false);
+      }
     };
 
     document.addEventListener("click", handleClickOutside);
@@ -150,14 +158,17 @@ const NavigationMenu = () => {
         >
           <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
             {navigationData.map((item, idx) => (
-              <li key={idx} className="text-gray-700 hover:text-gray-900">
+              <li
+                key={idx}
+                className={`hover:text-gray-900 ${pathname === item.path ? "text-black font-semibold" : "text-gray-700"}`}
+              >
                 <Link href={item.path} className="block text-md">
                   {item.title}
                 </Link>
               </li>
             ))}
             {manageDropdownData.length > 0 && (
-              <li className="relative text-gray-700 hover:text-gray-900">
+              <li className="relative hover:text-gray-900">
                 <button
                   className="dropdown-btn block text-md"
                   onClick={(e) => {
@@ -170,7 +181,11 @@ const NavigationMenu = () => {
                 {dropdownOpen && (
                   <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 w-40 space-y-2 z-10 right-0">
                     {manageDropdownData.map((item, idx) => (
-                      <li key={idx} className="hover:bg-gray-100">
+                      <li
+                        key={idx}
+                        className={`hover:bg-gray-100 ${pathname === item.path ? "text-black font-bold" : "text-gray-700"}`}
+                        onClick={() => setDropdownOpen(false)}
+                      >
                         <Link href={item.path} className="block px-4 py-2">
                           {item.title}
                         </Link>
