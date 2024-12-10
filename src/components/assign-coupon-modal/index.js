@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { toast } from "react-toastify";
 import { backendApi } from "@/data";
-
+import { UserContext } from "@/context/UserContext";
 const AssignCouponModal = ({ userId, isOpen, onClose }) => {
   const [couponCategories, setCouponCategories] = useState([]);
-
+  const { user } = useContext(UserContext);
   const couponCategoryIdRef = useRef(null);
   const noOfPersonRef = useRef(null);
+  const visitorRef = useRef(null);
   const fetchCouponCategories = async () => {
     try {
       const response = await fetch(`${backendApi.active_coupon_category}`);
@@ -27,6 +28,7 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
     e.preventDefault();
     const noOfPerson = noOfPersonRef.current.value;
     const couponCategoryId = couponCategoryIdRef.current.value;
+    const assignerId = user._id;
 
     try {
       const response = await fetch(`${backendApi.assign_coupon}`, {
@@ -38,6 +40,8 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
           userId,
           noOfPerson,
           couponCategoryId,
+          assignerId,
+          isVisitor: visitorRef.current.value,
         }),
       });
       const data = await response.json();
@@ -72,7 +76,7 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium">Staff</label>
+            <label className="block text-sm font-medium">Coupon</label>
             <select
               name="couponCategoryId"
               required
@@ -85,6 +89,22 @@ const AssignCouponModal = ({ userId, isOpen, onClose }) => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="mb-4">
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                name="visitor"
+                id="visitor"
+                ref={visitorRef}
+                onChange={(e) => {
+                  visitorRef.current.value = e.target.checked;
+                }}
+              />
+              <label className="block text-sm font-medium" htmlFor="visitor">
+                Visitor
+              </label>
+            </div>
           </div>
 
           <div className="flex justify-end space-x-2 ">

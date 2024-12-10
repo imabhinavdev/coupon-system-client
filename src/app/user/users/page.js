@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { SiteLinks } from "@/data";
 import { motion } from "framer-motion";
-import { EditIcon, LoadingIcon } from "@/components/icons";
+import { EditIcon, EyeOpenIcon, LoadingIcon } from "@/components/icons";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -109,7 +109,7 @@ const AdminUsersPage = () => {
                   <Link
                     href={`${SiteLinks.manage_single_user.link}/${user?._id}`}
                   >
-                    <EditIcon />
+                    <EyeOpenIcon className="w-6 h-6" />
                   </Link>
                 </td>
               </tr>
