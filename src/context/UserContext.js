@@ -2,14 +2,14 @@
 import { useState, createContext, useEffect } from "react";
 import { backendApi } from "@/data";
 import { LoadingIcon } from "@/components/icons";
-
+import { usePathname } from "next/navigation";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
   const [userPermissions, setUserPermissions] = useState(null);
-
+  const pathname = usePathname();
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
     </>
   );
 
-  if (loading) {
+  if (loading && pathname !== "/") {
     return <Loader />;
   }
 
