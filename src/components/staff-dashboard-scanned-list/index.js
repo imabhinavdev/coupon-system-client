@@ -56,9 +56,7 @@ const StaffDashboardScannedList = () => {
                 <th className="py-2 px-4 sm:px-6 text-left font-semibold">
                   Scanned By
                 </th>
-                <th className="py-2 px-4 sm:px-6 text-left font-semibold">
-                  Used
-                </th>
+                
               </tr>
             </thead>
             <tbody>
@@ -86,15 +84,9 @@ const StaffDashboardScannedList = () => {
                     {coupon.transactionId}
                   </td>
                   <td className="py-3 px-4 sm:px-6 text-black">
-                    {coupon.scannedBy}
+                    {coupon.scannedBy.name}
                   </td>
-                  <td className="py-3 px-4 sm:px-6">
-                    {coupon.isUsed ? (
-                      <span className="text-green-600 font-medium">Yes</span>
-                    ) : (
-                      <span className="text-red-600 font-medium">No</span>
-                    )}
-                  </td>
+                  
                 </tr>
               ))}
             </tbody>
