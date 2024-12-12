@@ -41,6 +41,10 @@ const NavigationMenu = () => {
         path: "/contact",
         requiredPermission: Permissions.seeContact,
       },
+      {
+        title: "My Profile",
+        path: "/user/profile",
+      },
     ];
 
     let manageData = [
