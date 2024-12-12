@@ -183,7 +183,7 @@ const NavigationMenu = () => {
                   Manage
                 </button>
                 {dropdownOpen && (
-                  <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 w-40 space-y-2 z-10 right-0">
+                  <ul className="dropdown-menu absolute bg-white shadow-md rounded-md mt-2 py-2 space-y-2 z-10 -right-50 lg:right-100 w-40 sm:w-60 md:w-40 lg:w-40">
                     {manageDropdownData.map((item, idx) => (
                       <li
                         key={idx}
