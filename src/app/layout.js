@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/context/UserContext";
 import "react-loading-skeleton/dist/skeleton.css";
 import QueryProvider from "@/providers/QueryClientProvider";
+import ErrorBoundaryComp from "@/helpers/ErrorBoundary";
 
 const dmsans = Poppins({
   subsets: ["latin"],
@@ -30,7 +31,7 @@ export default function RootLayout({ children }) {
           <UserProvider>
             <NavigationBar />
             <div className="flex-grow flex flex-col h-full md:px-0 px-4">
-              {children}
+              <ErrorBoundaryComp>{children}</ErrorBoundaryComp>
             </div>
             <Footer />
             <ToastContainer />
